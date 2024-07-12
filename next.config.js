@@ -5,7 +5,7 @@ const nextConfig = {
   env: {
     //For Local Server
     //API_PROD_URL: "https://api.fabteecraft.com/api/",
-    API_PROD_URL: "https://api.fabteecraft.com/",
+    API_PROD_URL: "https://api.fabteecraft.com/api/",
   },
   redirects: async () => {
     return [
