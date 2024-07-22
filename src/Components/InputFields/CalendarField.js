@@ -6,9 +6,10 @@ import { LocalizationProvider, MobileDatePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 
-const CalendarField = ({ value, setFieldValue, label, name, errors, touched }) => {
+const CalendarField = ({ values, setFieldValue, label, name, errors, touched }) => {
     const { i18Lang } = useContext(I18NextContext);
     const { t } = useTranslation(i18Lang, 'common');
+
     return (
         <div className="input-error">
           <Row className="mb-4 align-items-center">
@@ -18,8 +19,8 @@ const CalendarField = ({ value, setFieldValue, label, name, errors, touched }) =
                 <MobileDatePicker
                     disablePast
                     name={name}
-                    value={dayjs(value)}
-                    onChange={(val) => setFieldValue(name, val)}
+                    defaultValue={dayjs()}
+                    onChange={(value) => setFieldValue(name, value, true)}
                     slotProps={{
                         textField: {
                             variant: "outlined",

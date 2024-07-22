@@ -11,9 +11,15 @@ const ShowModal = ({ open = false, buttons, title, close = true, modalAttr, setM
     setIsOpen(open);
   }, [open]);
   return (
-    <Modal id="staticBackdrop" isOpen={isOpen} centered className={`theme-modal theme-form ${modalAttr?.className}`} toggle={() => {
-      setIsOpen(false); setModal && setModal(false);
-    }}>
+    <Modal
+      id="staticBackdrop"
+      isOpen={isOpen}
+      centered
+      className={`theme-modal theme-form ${modalAttr?.className}`}
+      toggle={() => {
+        setIsOpen(false); setModal && setModal(false);
+      }}
+    >
       {close && (
         <ModalHeader
           toggle={() => {

@@ -20,6 +20,7 @@ const CalendarField = ({ values, setFieldValue, label, name, errors, touched }) 
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <MobileDatePicker
                     disablePast
+                    name={name}
                     defaultValue={dayjs()}
                     onChange={(value) => setFieldValue(name, value, true)}
                     slotProps={{

@@ -3,7 +3,7 @@ import I18NextContext from "@/Helper/I18NextContext";
 import { useTranslation } from "@/app/i18n/client";
 import SimpleInputField from "@/Components/InputFields/SimpleInputField";
 import SearchableSelectInput from "@/Components/InputFields/SearchableSelectInput";
-import { generateCountData, generateMonthlySchedule } from "@/Utils/utils";
+import { generateCountData, generateMonthlySchedule, MoneyFormat } from "@/Utils/utils";
 import { Banks } from "@/Utils/Banks";
 
 const AmortizationAccount = ({ values, setFieldValue, errors, updateId }) => {
@@ -16,6 +16,7 @@ const AmortizationAccount = ({ values, setFieldValue, errors, updateId }) => {
           {
             title: t("DueDate"),
             name: "due_date",
+            require: "true",
             inputprops: {
               name: "due_date",
               id: "due_date",
@@ -30,6 +31,7 @@ const AmortizationAccount = ({ values, setFieldValue, errors, updateId }) => {
           {
             title: t("bankName"),
             name: "bank_name",
+            require: "true",
             inputprops: {
               name: "bank_name",
               id: "bank_name",
@@ -44,6 +46,7 @@ const AmortizationAccount = ({ values, setFieldValue, errors, updateId }) => {
           {
             title: t("MonthContract"),
             name: "month_contract",
+            require: "true",
             inputprops: {
               name: "month_contract",
               id: "month_contract",
@@ -59,7 +62,7 @@ const AmortizationAccount = ({ values, setFieldValue, errors, updateId }) => {
             {
               title: t("AccountNo"),
               name: "account_no",
-              require: "false",
+              require: "true",
               placeholder: t("AccountNo")
             },
           ]
@@ -68,8 +71,9 @@ const AmortizationAccount = ({ values, setFieldValue, errors, updateId }) => {
       <SimpleInputField
         nameList={[
             {
-              type: 'number',
+              value: MoneyFormat(values?.amort_amount),
               name: "amort_amount",
+              require: "true",
               inputaddon: "true",
               title: t("AmortAmount"),
               placeholder: t("AmortAmount"),

@@ -7,15 +7,11 @@ import SearchableSelectInput from "@/Components/InputFields/SearchableSelectInpu
 import { Col, Row } from "reactstrap";
 import FileUploadField from "@/Components/InputFields/FileUploadField";
 
-const OwnerTab = ({ values, setFieldValue, errors, updateId, users }) => {
+const OwnerTab = ({ values, users }) => {
   const { i18Lang } = useContext(I18NextContext);
   const { t } = useTranslation(i18Lang, 'common');
   const selectedOldOwner = values?.old_owner_id
     ? users.filter((user) => user.id === values?.old_owner_id) 
-    : 0;
-  
-  const selectedNewOwner = values?.new_owner_id
-    ? users.filter((user) => user.id === values?.new_owner_id) 
     : 0;
 
   return (

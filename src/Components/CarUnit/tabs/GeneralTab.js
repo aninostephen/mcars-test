@@ -1,8 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
 import { Col, Label, Row } from "reactstrap";
-import request from "@/Utils/AxiosUtils";
-import { bt, cm } from "@/Utils/AxiosUtils/API";
 import SimpleInputField from "../../InputFields/SimpleInputField";
 import SearchableSelectInput from "../../InputFields/SearchableSelectInput";
 import I18NextContext from "@/Helper/I18NextContext";
@@ -10,24 +7,11 @@ import { useTranslation } from "@/app/i18n/client";
 import GetValue from "@/Utils/CustomFunctions/GetValue";
 import ToggleInput from "@/Components/InputFields/ToggleInput";
 import Btn from '@/Elements/Buttons/Btn';
+import { MoneyFormat } from "@/Utils/utils";
 
-const GeneralTab = ({ values, setFieldValue }) => {
+const GeneralTab = ({ values, setFieldValue, bodyType, carMake }) => {
   const { i18Lang } = useContext(I18NextContext);
   const { t } = useTranslation(i18Lang, 'common');
-  const { data: bodyType } = useQuery([bt], () => request({
-    url: bt, 
-    params: { status: 1 }
-  }), {
-    refetchOnWindowFocus: false,
-    select: (data) => data.data.data.map((item) => ({ id: item.id, name: item.body_type_name })) 
-  });
-  const { data: carMake } = useQuery([cm], () => request({ 
-    url: cm, 
-    params: { status: 1 }
-  }), {
-    refetchOnWindowFocus: false,
-    select: (data) => data.data.data.map((item) => ({ id: item.id, name: item.car_make_name })) 
-  });
 
   useEffect(() => {
     if (values['car_make_id'] || values['body_type_id'] || values['model_variant'] || values['year']) {
@@ -36,7 +20,6 @@ const GeneralTab = ({ values, setFieldValue }) => {
       const unitName = `${cmObj?.name ? cmObj.name + ' |' : ''} ${values['model_variant']} - ${values['year']} ${btObj?.name ? `(${btObj.name})` : ''}`;
       setFieldValue('car_name', unitName);
     }
-
   }, [
     values?.car_make_id,
     values?.model_variant,
@@ -50,14 +33,15 @@ const GeneralTab = ({ values, setFieldValue }) => {
         nameList={
           [
             {
-              title: t("CarMakeName"),
+              title: t("UnitName"),
               name: "car_name",
               require: "true",
               readOnly: true,
-              placeholder: t("CarMakeName")
+              placeholder: t("UnitName")
             },
           ]
-        } />
+        }
+      />
 
       <SimpleInputField 
         nameList={
@@ -105,7 +89,7 @@ const GeneralTab = ({ values, setFieldValue }) => {
         ]}
       />
 
-      <SimpleInputField 
+      <SimpleInputField
         nameList={
           [
             { 
@@ -168,24 +152,40 @@ const GeneralTab = ({ values, setFieldValue }) => {
         }}
       />
 
-      <ToggleInput
-        {...{
-          title: t("Transmission"),
-          name: "transmission",
-          require: "true",
-          setFieldValue,
-          values,
-          inputprops: {
+      <SearchableSelectInput
+        nameList={[
+          {
+            title: t("Transmission"),
             name: "transmission",
-            id: "transmission",
-            options: [
-              { id: "AUTOMATIC", name: "Automatic" },
-              { id: "MANUAL", name: "Manual" },
-              { id: "AUTO_MANUAL", name: "Automatic/Manual" },
-            ],
+            require: "true",
+            inputprops: {
+              name: "transmission",
+              id: "transmission",
+              options: [
+                { id: "AUTOMATIC", name: "Automatic" },
+                { id: "MANUAL", name: "Manual" },
+                { id: "AUTO_MANUAL", name: "Automatic/Manual" },
+                { id: "CVT", name: "CVT" },
+                { id: "ELECTRIC", name: "Electric" },
+              ],
+            },
           },
-        }}
+        ]}
       />
+      
+      <SimpleInputField
+        nameList={
+          [
+            {
+              value: MoneyFormat(values?.downpayment),
+              title: t("Downpayment"),
+              name: "downpayment",
+              require: "true",
+              inputaddon: "true",
+              placeholder: t("Downpayment")
+            },
+          ]
+      } />
 
       <Row className='mb-4 align-items-center g-2'>
           <Col sm="3"><Label className='col-form-label form-label-title form-label'> {t("CarFeatures")}</Label></Col>

@@ -3,8 +3,16 @@ import ShowTable from "../Table/ShowTable";
 import usePermissionCheck from "../../Utils/Hooks/usePermissionCheck";
 import placeHolderImage from "../../../public/assets/images/placeholder.png";
 import { TransactionsStatus } from "@/Utils/Enums";
+import TableFilter from "./components/tableFilter";
 
-const CarUnit = ({ data, ...props }) => {
+let filter = {
+  stock_status: {},
+  unit_status: {},
+  transmission: {},
+  brand: {},
+};
+
+const CarUnit = ({ data, onHandleFilter, ...props }) => {
   const [edit, destroy] = usePermissionCheck(["edit", "destroy"]);
   const headerObj = {
     checkBox: true,
@@ -20,9 +28,11 @@ const CarUnit = ({ data, ...props }) => {
     ],
     data: data || []
   };
+
   if (!data) return null;
   return <>
-    <ShowTable {...props} headerData={headerObj} />
+    <TableFilter filter={filter} onHandleFilter={onHandleFilter} />
+    <ShowTable {...props} headerData={headerObj} moduleName="car_unit" />
   </>
 };
 

@@ -6,7 +6,8 @@ import {
   RiSettings3Line,
   RiTruckLine,
   RiGitRepositoryFill,
-  RiWindowLine
+  RiWindowLine,
+  RiFolder3Line,
 } from "react-icons/ri";
 
 const MENUITEMS = [
@@ -38,6 +39,14 @@ const MENUITEMS = [
     ],
   },
   {
+    title: "Amortization Ledger",
+    displayTitle: "Amortization Ledger",
+    icon: <RiFolder3Line />,
+    path: "/amortization_ledger",
+    permission: ["amortization_ledger.index", "amortization_ledger.create"],
+    type: "link"
+  },
+  {
     title: "Transactions",
     displayTitle: "Transactions",
     icon: <RiPagesLine />,
@@ -45,6 +54,7 @@ const MENUITEMS = [
     children: [
       { title: "Reservation", path: "/reservation", displayTitle: "Reservation", permission: ["reservation.index"] },
       { title: "Release Station", path: "/transaction", displayTitle: "Release Station", permission: ["transaction.index"] },
+      { title: "Remit", path: "/remit", displayTitle: "Remit", permission: ["remit.index", "remit.create"] },
     ],
   },
   {

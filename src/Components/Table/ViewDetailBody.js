@@ -47,7 +47,7 @@ const ViewDetailBody = ({ fullObj }) => {
                         </tr></>}
                     <tr>
                         <td className="text-start fw-semibold">{t("PaymentMethod")} </td>
-                        <td className="text-start">{fullObj?.payment_type.toUpperCase()}</td>
+                        <td className="text-start">{fullObj?.payment_type?.toUpperCase()}</td>
                     </tr>
                     {fullObj?.status && <tr>
                         <td className="text-start fw-semibold">{t('Status')}</td>

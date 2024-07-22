@@ -14,13 +14,13 @@ import TableLoader from "./TableLoader";
 import I18NextContext from "@/Helper/I18NextContext";
 import { useTranslation } from "@/app/i18n/client";
 import { MoneyFormat } from "@/Utils/utils";
-import { Chip } from "@mui/material";
 import dayjs from "dayjs";
+import { Status as GlobaStatus } from '@/Utils/statues';
 
 const ShowTable = ({ current_page, per_page, mutate, isCheck, setIsCheck, url, sortBy, setSortBy, headerData, fetchStatus, moduleName, type, redirectLink, refetch, keyInPermission }) => {
   const { i18Lang } = useContext(I18NextContext);
   const { t } = useTranslation(i18Lang, "common");
-  const { convertCurrency } = useContext(SettingContext);
+  const { convertCurrency, currencySymbol } = useContext(SettingContext);
   const [edit] = usePermissionCheck(["edit", "destroy"]);
   const [colSpann, setColSpann] = useState();
   const router = useRouter();
@@ -133,7 +133,11 @@ const ShowTable = ({ current_page, per_page, mutate, isCheck, setIsCheck, url, s
                       </>
                     ) : item.type == "money" ? (
                       <>
-                        <Chip label={MoneyFormat(tableData[item?.apiKey])} />
+                        {currencySymbol} {tableData[item?.apiKey] ? MoneyFormat(tableData[item?.apiKey]) : 0.00}
+                      </>
+                    ): item.type == "payment_type" ? (
+                      <>
+                        {GlobaStatus?.RELEASE_PAYMENT_TYPE[tableData[item?.apiKey]]}
                       </>
                     ) : item.type == "switch" ? (
                       <>{!edit || headerData?.data?.[index].system_reserve == "1" ? <Status data={tableData} url={url} disabled={true} /> : <Status data={tableData} url={item.url ? item.url : url} apiKey={item.url && item.apiKey} />}</>

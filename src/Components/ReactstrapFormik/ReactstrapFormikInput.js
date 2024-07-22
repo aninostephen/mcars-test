@@ -17,7 +17,7 @@ const ReactstrapFormikInput = ({ field: { ...fields }, form: { touched, errors }
           <FormGroup floating>
             <Input {...props} {...fields} invalid={Boolean(touched[fields.name] && errors[fields.name])} valid={Boolean(touched[fields.name] && !errors[fields.name])} autoComplete="off" />
             <Label htmlFor={props.id}>{t(props.label)}</Label>
-            {touched[fields.name] && errors[fields.name] ? <FormFeedback>{t(handleModifier(errors[fields.name]).split(" ").join(""))}</FormFeedback> : ""}
+            {touched[fields.name] && errors[fields.name] ? <FormFeedback>{t(handleModifier(errors[fields.name]).split(" ").join(" "))}</FormFeedback> : ""}
           </FormGroup>
         </>
       )
@@ -31,7 +31,7 @@ const ReactstrapFormikInput = ({ field: { ...fields }, form: { touched, errors }
                 } else false
               }} />
               {props.postprefix && <InputGroupText>{props.postprefix}</InputGroupText>}
-              {touched[fields.name] && errors[fields.name] ? <FormFeedback>{t(handleModifier(errors[fields.name]).split(" ").join(""))}</FormFeedback> : ""}
+              {touched[fields.name] && errors[fields.name] ? <FormFeedback>{t(handleModifier(errors[fields.name]).split(" ").join(" "))}</FormFeedback> : ""}
               {props?.errormsg && <ErrorMessage name={fields.name} render={(msg) => <div className="invalid-feedback d-block">{t(props.errormsg)} {t('IsRequired')}</div>} />}
             </InputGroup>
             {props?.helpertext && <p className="help-text">{props?.helpertext}</p>}
@@ -55,7 +55,7 @@ const ReactstrapFormikInput = ({ field: { ...fields }, form: { touched, errors }
                     {props?.helpertext && <p className="help-text">{props?.helpertext}</p>}
                     {touched[fields.name] && errors[fields.name] ?
                       <FormFeedback>
-                        {t(handleModifier(errors[fields.name]).split(" ").join(""))}
+                        {t(handleModifier(errors[fields.name]).split(" ").join(" "))}
                       </FormFeedback>
                       : ""}
                     {props?.errormsg && <ErrorMessage name={fields.name} render={(msg) => <div className="invalid-feedback d-block">

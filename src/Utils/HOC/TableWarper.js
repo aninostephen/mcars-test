@@ -19,10 +19,25 @@ const TableWarper = (WrappedComponent) => {
       const [search, setSearch] = useState('');
       const [date, setDate] = useState([{ startDate: null, endDate: null, key: 'selection' }]);
       const [sortBy, setSortBy] = useState({ field: '', sort: 'asc' });
+      const [filterTable, setFilterTable] = useState({});
       const { mutate, isLoading: load } = useDelete(url);
       let ifParamsData = paramsProps ? Object.keys(paramsProps)[0] : '';
       const { data, isLoading, refetch, fetchStatus } = useQuery([url], () => request({
-        url, method: 'get', params: { paginate, page, search, sort: sortBy?.sort, field: sortBy?.field, type: type, start_date: date[0]?.startDate ?? null, end_date: date[0]?.endDate ?? null, ...paramsProps }
+        url,
+        method: 'get',
+        params: 
+        {
+          paginate,
+          page,
+          search,
+          sort: sortBy?.sort,
+          field: sortBy?.field,
+          type: type,
+          start_date: date[0]?.startDate ?? null,
+          end_date: date[0]?.endDate ?? null,
+          ...filterTable,
+          ...paramsProps 
+        }
       }, router), { refetchOnWindowFocus: false, refetchOnMount: false, cacheTime: 0 });
 
       // To use this function in parent
@@ -30,7 +45,18 @@ const TableWarper = (WrappedComponent) => {
 
       useEffect(() => {
         (!loading || url) && refetch();
-      }, [paginate, page, date, search, loading, load, sortBy, type, paramsProps ? paramsProps[ifParamsData] : '']);
+      }, [
+        paginate,
+        page,
+        date,
+        search,
+        loading,
+        load,
+        sortBy,
+        type,
+        filterTable,
+        paramsProps ? paramsProps[ifParamsData] : ''
+      ]);
 
       useEffect(() => {
         if (!data?.data?.length || !data?.data?.data?.length) {
@@ -40,6 +66,11 @@ const TableWarper = (WrappedComponent) => {
           setFieldValue ? setFieldValue('showBalance', data?.data?.balance) : '';
         }
       }, [data]);
+
+      const onHandleFilter = (e) => {
+        setFilterTable({...filterTable, ...e});
+      };
+
       if (isLoading) return <Loader />;
       return (
         <>
@@ -51,8 +82,23 @@ const TableWarper = (WrappedComponent) => {
               )}
               <div className='table-responsive border-table'>
                 <WrappedComponent
-                  data={userIdParams ? data?.data : data?.data?.data} sortBy={sortBy} setSortBy={setSortBy} moduleName={moduleName} type={type} current_page={userIdParams ? data?.data?.transactions?.current_page : data?.data?.current_page} per_page={userIdParams ? data?.data?.transactions?.per_page : data?.data?.per_page} mutate={mutate}
-                  url={url} userIdParams={userIdParams} fetchStatus={fetchStatus} refetch={refetch} isCheck={isCheck} setIsCheck={setIsCheck} {...props} keyInPermission={keyInPermission} />
+                  data={userIdParams ? data?.data : data?.data?.data}
+                  sortBy={sortBy}
+                  setSortBy={setSortBy}
+                  moduleName={moduleName}
+                  type={type}
+                  current_page={userIdParams ? data?.data?.transactions?.current_page : data?.data?.current_page}
+                  per_page={userIdParams ? data?.data?.transactions?.per_page : data?.data?.per_page}
+                  mutate={mutate}
+                  url={url}
+                  userIdParams={userIdParams}
+                  fetchStatus={fetchStatus}
+                  refetch={refetch}
+                  isCheck={isCheck}
+                  setIsCheck={setIsCheck}
+                  onHandleFilter={onHandleFilter}
+                  {...props}
+                  keyInPermission={keyInPermission} />
               </div>
             </CardBody>
             {filterHeader?.noPagination !== true && (

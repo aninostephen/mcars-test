@@ -3,15 +3,18 @@ import dynamic from "next/dynamic";
 import { useState } from "react";
 import { Col } from "reactstrap";
 import { cu } from "@/Utils/AxiosUtils/API";
-import CarUnit from "@/Components/CarUnit";
+import Ledgers from "@/Components/AmortLedger/Index"
 
-const CarUnitCreate = () => {
+const AmortizationLedgerCreate = () => {
   const [isCheck, setIsCheck] = useState([]);
   return (
     <Col sm="12">
-      <CarUnit
+      <Ledgers
+        paramsProps={{
+          isLedger: true,
+        }}
         url={cu}
-        moduleName="Car Unit"
+        moduleName="Amortization Ledgers"
         isCheck={isCheck}
         setIsCheck={setIsCheck}
       />
@@ -19,4 +22,4 @@ const CarUnitCreate = () => {
   );
 };
 
-export default CarUnitCreate;
+export default AmortizationLedgerCreate;

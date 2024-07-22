@@ -22,7 +22,7 @@ const ReservationForm = ({ mutate, updateId, loading }) => {
 
   const { data: unit, isFetching: isFetchingUnit, refetch: unitRefetch } = useQuery([cu], () => request({ 
     url: cu,
-    params: { stock_status: 'ON-HOLD' }
+    params: { stock_status: 'ON-HAND' }
   }),
   { 
     refetchOnMount: false,
@@ -54,13 +54,14 @@ const ReservationForm = ({ mutate, updateId, loading }) => {
         from: updateId ? oldData?.data?.from || "" : "",
         amount: updateId ? oldData?.data?.amount || "" : "",
         status: updateId ? Boolean(Number(oldData?.data?.status)) : true,
-        have_fee: updateId ? Boolean(Number(oldData?.data?.have_fee)) : false,
+        // have_fee: updateId ? Boolean(Number(oldData?.data?.have_fee)) : false,
         target_date: updateId ? oldData?.target_date || new Date() : new Date(),
       }}
       validationSchema={YupObject({
         car_unit_id: nameSchema,
         new_owner_id: nameSchema,
         from: nameSchema,
+        amount: nameSchema,
         target_date: nameSchema,
       })}
       onSubmit={(values) => {
@@ -98,24 +99,20 @@ const ReservationForm = ({ mutate, updateId, loading }) => {
               },
             ]}
           />
-
-          <CheckBoxField name="have_fee" title="Have Fee" />
           
-          {values.have_fee && (
-            <SimpleInputField
-              nameList={
-              [
-                  {
-                      value: MoneyFormat(values.amount),
-                      title: "Amount",
-                      name: "amount",
-                      inputaddon: "true",
-                      require: "true",
-                      placeholder: "Amount"
-                  },
-              ]
-            } />
-          )}
+          <SimpleInputField
+            nameList={
+            [
+                {
+                    value: MoneyFormat(values.amount),
+                    title: "Amount",
+                    name: "amount",
+                    inputaddon: "true",
+                    require: "true",
+                    placeholder: "Amount"
+                },
+            ]
+          } />
 
           <CalendarField
             values={values}

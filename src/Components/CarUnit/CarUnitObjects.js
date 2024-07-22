@@ -1,35 +1,43 @@
 import dayjs from "dayjs";
-import { descriptionSchema, discountSchema, dropDownScheme, ifTypeSimpleSchema, nameSchema, variationSchema, externalUrlSchema } from "./ValidationSchemas";
+import { descriptionSchema, nameSchema, } from "./ValidationSchemas";
 
 export const ValidationSchema = {
   car_name: nameSchema,
   plate_no: nameSchema,
-  // model_variant: descriptionSchema,
-  // car_make_id: nameSchema,
-  // year: externalUrlSchema,
-  // body_type_id: ifTypeSimpleSchema,
-  // unit_status: ifTypeSimpleSchema,
-  // transmission: ifTypeSimpleSchema, // if (type == simple)
+  car_make_id: nameSchema,
+  year: nameSchema,
+  model_variant: nameSchema,
+  body_type_id: nameSchema,
+  unit_status: nameSchema,
+  transactions: nameSchema,
+  transmission: nameSchema,
+  stability: nameSchema,
+  on_handling_payment: nameSchema,
+  pickup_date_target: nameSchema,
+  driver_user_id: nameSchema,
+  backup_user_id: nameSchema,
+  pickup_destination: nameSchema,
+  remarks: descriptionSchema,
+  engine_number: nameSchema,
+  chasis_number: nameSchema,
+  mvfile_number: nameSchema,
+  cr_number: nameSchema,
+  insurance_name: nameSchema,
+  is_registered: nameSchema,
+  old_owner_id: nameSchema,
+  bank_name: nameSchema,
+  month_contract: nameSchema,
+  account_no: nameSchema,
+  amort_amount: nameSchema,
+  amort_start_date: nameSchema,
+  amort_end_date: nameSchema,
+  month_paid: nameSchema,
+  due_date: nameSchema,
+  downpayment: nameSchema,
 };
 
 export function InitValues(oldData, updateId) {
-  const attr_combination = () => {
-    let attributes = oldData?.attributes?.map((value) => value?.id);
-    let variants = attributes?.map((attr, i) => {
-      let matchingVariations = oldData?.variations.filter((variation) => {
-        return variation.attribute_values.some((attrVal) => attrVal?.attribute_id == attr);
-      });
-
-      let attributeValues = matchingVariations?.reduce((acc, variation) => {
-        let values = variation.attribute_values.filter((attrVal) => attrVal?.attribute_id == attr).map((attrVal) => attrVal?.id);
-        return values ? [...new Set([...acc, ...values])] : acc;
-      }, []);
-      return oldData?.attributes[i] && attributeValues.length > 0 ? { name: oldData?.attributes[i], values: attributeValues } : false;
-    });
-    return variants?.filter((elem) => elem !== false);
-  };
   return {
-    // General
     car_name: updateId ? oldData?.car_name || "" : "",
     transactions: updateId ? oldData?.transactions || "" : "ASSUME_UNIT",
     plate_no: updateId ? oldData?.plate_no || "" : "",
@@ -41,7 +49,7 @@ export function InitValues(oldData, updateId) {
     model_variant: updateId ? oldData?.model_variant || "" : "",
     pickup_date_target: updateId ? oldData?.pickup_date_target || new Date() : new Date(),
     status: updateId ? Boolean(oldData?.status) : true,
-
+    pickup_destination: updateId ? oldData?.pickup_destination || "" : "",
     on_handling_payment: updateId ? oldData?.on_handling_payment || "" : "",
     remarks: updateId ? oldData?.remarks || "" : "",
     driver_user_id: updateId ? oldData?.driver_user_id || "" : "",
@@ -63,7 +71,7 @@ export function InitValues(oldData, updateId) {
     month_contract: updateId ? parseInt(oldData?.month_contract) || '' : '',
     account_no: updateId ? oldData?.account_no || '' : '',
     stability: updateId ? oldData?.stability || '' : '',
-    car_thumbnail_id: updateId ? oldData?.car_thumbnail.id || '' : '',
+    car_thumbnail_id: updateId ? oldData?.car_thumbnail?.id || '' : '',
     car_thumbnail: updateId ? oldData?.car_thumbnail || '' : '',
     car_unit_galleries: updateId ? oldData?.car_unit_galleries?.map((img) => img) || "" : "",
     car_unit_galleries_id: updateId ? oldData?.product_galleries?.map((elem) => elem.id) || "" : "",
@@ -75,5 +83,6 @@ export function InitValues(oldData, updateId) {
 
     amort_start_date: updateId ? oldData?.amort_start_date || dayjs() : dayjs(),
     amort_end_date: updateId ? oldData?.amort_end_date || dayjs() : dayjs(),
+    downpayment: updateId ? oldData?.downpayment || '' : '',
   };
 }

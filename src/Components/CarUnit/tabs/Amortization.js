@@ -41,13 +41,13 @@ const Amortization = ({ values, setFieldValue, errors, updateId, _, touched }) =
             />
           </TabPane>
           <TabPane tabId="3">
-            <Ledger
+            {/* <Ledger
               values={values}
               setFieldValue={setFieldValue} 
               errors={errors}
               updateId={updateId}
               touched={touched}
-            />
+            /> */}
           </TabPane>
         </TabContent>
       </div>

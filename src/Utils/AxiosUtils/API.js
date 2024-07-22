@@ -155,3 +155,4 @@ export const cu = "/cu";
 export const client = "/client";
 export const release = "/release";
 export const reservation = "/reservation";
+export const culedger = "/cu-ledger";

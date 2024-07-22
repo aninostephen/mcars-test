@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Card, CardBody, CardTitle, Col, ListGroup, ListGroupItem, Row } from 'reactstrap';
+import React, { useContext, useEffect, useState } from 'react';
+import { Card, CardBody, Col, ListGroup, ListGroupItem, Row } from 'reactstrap';
 import {
     RiAccountPinCircleFill,
     RiMailOpenFill,
@@ -9,8 +9,10 @@ import SimpleInputField from '../InputFields/SimpleInputField';
 import SearchableSelectInput from '../InputFields/SearchableSelectInput';
 import CkEditorComponent from '../InputFields/CkEditorComponent';
 import { MoneyFormat } from '@/Utils/utils';
+import SettingContext from '@/Helper/SettingContext';
 
 function UnitInformation({ unit, values, setFieldValue }) {
+    const { currencySymbol } = useContext(SettingContext);
     const [editorLoaded, setEditorLoaded] = useState(false);
     useEffect(() => {
         setEditorLoaded(true);
@@ -72,78 +74,6 @@ function UnitInformation({ unit, values, setFieldValue }) {
                                 </div>
                             </div>
                         </CardBody>
-                        <SearchableSelectInput
-                            nameList={[
-                            {
-                                title: "Payment",
-                                name: "payment_type",
-                                require: "true",
-                                inputprops: {
-                                    name: "payment_type",
-                                    id: "payment_type",
-                                    options: [
-                                        { id: "DOWNPAYMENT", name: "Downpayment Price" },
-                                        { id: "PAYOFF", name: "Pay-off Price" },
-                                    ],
-                                },
-                            },
-                            ]}
-                        />
-                        <SimpleInputField 
-                            nameList={
-                            [
-                                {
-                                    value: MoneyFormat(values.price),
-                                    title: "Price",
-                                    name: "price",
-                                    inputaddon: "true",
-                                    require: "true",
-                                    placeholder: "Price"
-                                },
-                            ]
-                        } />
-
-                        <SimpleInputField 
-                            nameList={
-                            [
-                                {
-                                    value: MoneyFormat(values.already_payment),
-                                    title: "Already Payment",
-                                    name: "already_payment",
-                                    inputaddon: "true",
-                                    require: "true",
-                                    placeholder: "Already Payment"
-                                },
-                            ]
-                        } />
-
-                        <SimpleInputField 
-                            nameList={
-                            [
-                                {
-                                    value: MoneyFormat(values.later_payment),
-                                    title: "Later Payment",
-                                    name: "later_payment",
-                                    inputaddon: "true",
-                                    require: "true",
-                                    placeholder: "Later Payment"
-                                },
-                            ]
-                        } />
-
-                        <SimpleInputField 
-                            nameList={
-                            [
-                                {
-                                    value: MoneyFormat(values.staggered_payment),
-                                    title: "Staggered Payment",
-                                    name: "staggered_payment",
-                                    inputaddon: "true",
-                                    require: "true",
-                                    placeholder: "Staggered Payment"
-                                },
-                            ]
-                        } />
 
                         <SearchableSelectInput
                             nameList={[
@@ -162,6 +92,106 @@ function UnitInformation({ unit, values, setFieldValue }) {
                             },
                             ]}
                         />
+
+                        <SearchableSelectInput
+                            nameList={[
+                            {
+                                title: "Payment",
+                                name: "payment_type",
+                                require: "true",
+                                inputprops: {
+                                    name: "payment_type",
+                                    id: "payment_type",
+                                    options: [
+                                        { id: "STAGGERED", name: "Staggered Payment" },
+                                        { id: "FULL_PAYMENT", name: "Full Payment" },
+                                        { id: "FULL_DOWNPAYMENT", name: "Full Downpayment" },
+                                    ],
+                                },
+                            },
+                            ]}
+                        />
+
+                        {values?.payment_type === 'FULL_PAYMENT' && (
+                            <SimpleInputField 
+                                nameList={
+                                [
+                                    {
+                                        value: MoneyFormat(values.price),
+                                        title: "Price",
+                                        name: "price",
+                                        inputaddon: "true",
+                                        require: "true",
+                                        placeholder: "Price"
+                                    },
+                                ]
+                            } />
+                        )}
+
+                        {values?.payment_type === 'FULL_DOWNPAYMENT' && (
+                            <SimpleInputField 
+                                nameList={
+                                [
+                                    {
+                                        value: MoneyFormat(unit.downpayment),
+                                        title: "DP Price",
+                                        name: "downpayment",
+                                        inputaddon: "true",
+                                        require: "true",
+                                        placeholder: "Downpayment Price",
+                                        helpertext: `Downpayment of this unit is ${currencySymbol}${MoneyFormat(unit?.downpayment)}`
+                                    },
+                                ]
+                            } />
+                        )}
+
+                        {values?.payment_type === 'STAGGERED' && (
+                            <SimpleInputField 
+                                nameList={
+                                [
+                                    {
+                                        value: MoneyFormat(values.already_payment),
+                                        title: "Already Payment",
+                                        name: "already_payment",
+                                        inputaddon: "true",
+                                        require: "true",
+                                        placeholder: "Already Payment"
+                                    },
+                                ]
+                            } />
+                        )}
+
+                        {values?.payment_type === 'STAGGERED' && (
+                            <SimpleInputField 
+                                nameList={
+                                    [
+                                        {
+                                            value: MoneyFormat(values.later_payment),
+                                            title: "Later Payment",
+                                            name: "later_payment",
+                                            inputaddon: "true",
+                                            require: "true",
+                                            placeholder: "Later Payment"
+                                        },
+                                    ]
+                            } />
+                        )}
+
+                        {values?.payment_type === 'STAGGERED' && (
+                            <SimpleInputField 
+                                nameList={
+                                    [
+                                        {
+                                            value: MoneyFormat(values.staggered_payment),
+                                            title: "Staggered Payment",
+                                            name: "staggered_payment",
+                                            inputaddon: "true",
+                                            require: "true",
+                                            placeholder: "Staggered Payment"
+                                        },
+                                    ]
+                            } />
+                        )}
 
                         <SearchableSelectInput
                             nameList={[

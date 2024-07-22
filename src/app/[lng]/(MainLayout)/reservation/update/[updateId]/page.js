@@ -21,7 +21,7 @@ const CuUpdate = ({ params }) => {
             <Btn
               className="btn-outline btn-lg"
               title="Release Unit"
-              onClick={() => router.push(`/${i18Lang}/transaction?unit=${params?.updateId}`)}
+              onClick={() => router.push(`/${i18Lang}/transaction/create?unit=${params?.updateId}`)}
             />
             <ReservationForm mutate={mutate} updateId={params?.updateId} loading={isLoading} />
           </Stack>

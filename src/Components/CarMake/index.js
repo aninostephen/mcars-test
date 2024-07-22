@@ -19,7 +19,7 @@ const CarMake = ({ data, ...props }) => {
   };
   if (!data) return null;
   return <>
-    <ShowTable {...props} headerData={headerObj} />
+    <ShowTable {...props} headerData={headerObj} moduleName="car_make" />
   </>
 };
 

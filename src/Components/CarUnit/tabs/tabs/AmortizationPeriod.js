@@ -15,15 +15,6 @@ const AmortizationPeriod = ({ values, setFieldValue, errors, updateId, touched }
   const { i18Lang } = useContext(I18NextContext);
   const { t } = useTranslation(i18Lang, 'common');
 
-  const [pickupdate, setPickupdate] = useState();
-  const { ref, isComponentVisible, setIsComponentVisible } = useOutsideDropdown();
-
-  const onChangeDate = (item, field) => {
-    setPickupdate(item);
-    setFieldValue(field, item);
-    setIsComponentVisible(false);
-  }
-
   return (
     <>
       <Row className="mb-4 align-items-center">
@@ -77,10 +68,11 @@ const AmortizationPeriod = ({ values, setFieldValue, errors, updateId, touched }
           {
             title: t("MonthPaid"),
             name: "month_paid",
+            require: "true",
             inputprops: {
               name: "month_paid",
               id: "month_paid",
-              options: generateCountData(100).map((month, idx) => ({ id: idx, name: `${month} month`})),
+              options: generateCountData(100, 0).map((month, idx) => ({ id: idx, name: `${month} month`})),
             },
           },
         ]}

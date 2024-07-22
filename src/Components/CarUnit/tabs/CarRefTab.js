@@ -4,7 +4,7 @@ import SimpleInputField from "../../InputFields/SimpleInputField";
 import I18NextContext from "@/Helper/I18NextContext";
 import { useTranslation } from "@/app/i18n/client";
 
-const CarRefTab = ({ values, setFieldValue, errors, updateId }) => {
+const CarRefTab = () => {
   const { i18Lang } = useContext(I18NextContext);
   const { t } = useTranslation(i18Lang, 'common');
   return (
@@ -15,7 +15,7 @@ const CarRefTab = ({ values, setFieldValue, errors, updateId }) => {
             {
               title: t("EngineNo"),
               name: "engine_number",
-              require: "false",
+              require: "true",
               placeholder: t("EngineNo")
             },
           ]
@@ -27,7 +27,7 @@ const CarRefTab = ({ values, setFieldValue, errors, updateId }) => {
             {
               title: t("ChasisNumber"),
               name: "chasis_number",
-              require: "false",
+              require: "true",
               placeholder: t("ChasisNumber")
             },
           ]
@@ -39,7 +39,7 @@ const CarRefTab = ({ values, setFieldValue, errors, updateId }) => {
             {
               title: t("MVfileNumber"),
               name: "mvfile_number",
-              require: "false",
+              require: "true",
               placeholder: t("MVfileNumber")
             },
           ]
@@ -51,7 +51,7 @@ const CarRefTab = ({ values, setFieldValue, errors, updateId }) => {
             {
               title: t("CRNumber"),
               name: "cr_number",
-              require: "false",
+              require: "true",
               placeholder: t("CRNumber")
             },
           ]
