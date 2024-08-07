@@ -8,8 +8,9 @@ import {
 import SimpleInputField from '../InputFields/SimpleInputField';
 import SearchableSelectInput from '../InputFields/SearchableSelectInput';
 import CkEditorComponent from '../InputFields/CkEditorComponent';
-import { MoneyFormat } from '@/Utils/utils';
+import { MoneyFormat, NumericFormat } from '@/Utils/utils';
 import SettingContext from '@/Helper/SettingContext';
+import {Typography, Divider, Stack } from '@mui/material';
 
 function UnitInformation({ unit, values, setFieldValue }) {
     const { currencySymbol } = useContext(SettingContext);
@@ -17,6 +18,24 @@ function UnitInformation({ unit, values, setFieldValue }) {
     useEffect(() => {
         setEditorLoaded(true);
     }, []);
+
+    let staggeredPayment = 0;
+    if (values?.payment_type === 'STAGGERED') {
+        const downpayment = parseInt(NumericFormat(unit?.downpayment));
+        const alreadyPayment = values?.already_payment ? parseInt(NumericFormat(values?.already_payment)) : 0 ;
+        const laterPayment = values?.later_payment ? parseInt(NumericFormat(values?.later_payment)) : 0;
+        staggeredPayment = (alreadyPayment || laterPayment)
+            ? downpayment - (alreadyPayment + laterPayment) < 0 
+                ? 0
+                : downpayment - (alreadyPayment + laterPayment)
+            : 0;
+        values.staggered_payment = MoneyFormat(staggeredPayment);
+    }
+    
+    if (values?.payment_type === 'FULL_DOWNPAYMENT') {
+        const downpayment = MoneyFormat(unit.downpayment)
+        values.downpayment = downpayment;
+    }
 
     return (
         <div>
@@ -74,7 +93,30 @@ function UnitInformation({ unit, values, setFieldValue }) {
                                 </div>
                             </div>
                         </CardBody>
-
+                        {(values?.payment_type === 'STAGGERED' || values?.payment_type === 'FULL_DOWNPAYMENT') && (
+                            <>
+                                <Stack direction="row" justifyContent="space-between" alignItems="center">
+                                    <Typography gutterBottom variant="h6" component="div">
+                                        Staggered Payment:
+                                    </Typography>
+                                    <Typography gutterBottom variant="h6" component="div">
+                                        {currencySymbol} {MoneyFormat(staggeredPayment)}
+                                    </Typography>
+                                </Stack>
+                                <Stack direction="row" justifyContent="space-between" alignItems="center">
+                                    <Typography gutterBottom variant="h6" component="div">
+                                        Downpayment:
+                                    </Typography>
+                                    <Typography color="red" gutterBottom variant="h6" component="div">
+                                        {currencySymbol} {MoneyFormat(unit?.downpayment)}
+                                    </Typography>
+                                </Stack>
+                                <Stack mb={2}>
+                                    <Divider mb={3} />
+                                </Stack>
+                            </>
+                        )}
+                        
                         <SearchableSelectInput
                             nameList={[
                             {
@@ -182,7 +224,8 @@ function UnitInformation({ unit, values, setFieldValue }) {
                                 nameList={
                                     [
                                         {
-                                            value: MoneyFormat(values.staggered_payment),
+                                            readOnly: true,
+                                            value: values.staggered_payment,
                                             title: "Staggered Payment",
                                             name: "staggered_payment",
                                             inputaddon: "true",

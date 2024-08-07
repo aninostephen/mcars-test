@@ -5,7 +5,6 @@ import ShowModal from '@/Elements/Alerts&Modals/Modal'
 import { Row, Col } from 'reactstrap'
 import useCreate from '@/Utils/Hooks/useCreate'
 import { Stack } from '@mui/material'
-import SimpleInputField from '../InputFields/SimpleInputField';
 import Btn from '@/Elements/Buttons/Btn'
 
 const ModalVerification = ({ modal, item, setModal }) => {

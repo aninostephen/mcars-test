@@ -17,6 +17,8 @@ import { MoneyFormat } from "@/Utils/utils";
 import dayjs from "dayjs";
 import { Status as GlobaStatus } from '@/Utils/statues';
 
+import {Box, Chip, Stack, Divider, Typography, Card} from '@mui/material';
+
 const ShowTable = ({ current_page, per_page, mutate, isCheck, setIsCheck, url, sortBy, setSortBy, headerData, fetchStatus, moduleName, type, redirectLink, refetch, keyInPermission }) => {
   const { i18Lang } = useContext(I18NextContext);
   const { t } = useTranslation(i18Lang, "common");
@@ -135,7 +137,54 @@ const ShowTable = ({ current_page, per_page, mutate, isCheck, setIsCheck, url, s
                       <>
                         {currencySymbol} {tableData[item?.apiKey] ? MoneyFormat(tableData[item?.apiKey]) : 0.00}
                       </>
-                    ): item.type == "payment_type" ? (
+                    ) : item.type == "release_payment" ? (
+                      <>
+                        {tableData['payment_type'] === 'STAGGERED' && (
+                          <Card variant="outlined">
+                            <Divider />
+                            <Box sx={{ p: 2 }}>
+                              <Stack direction="column" spacing={1} justifyContent="flex-start">
+                                <Stack direction="column" justifyContent="flex-start">
+                                  Already Payment: <Chip color="primary" label={`${currencySymbol} ${MoneyFormat(tableData['already_payment'])}`} size="small" />
+                                </Stack>
+                                <Stack direction="column" justifyContent="flex-start">
+                                  Later Payment: <Chip color="primary" label={`${currencySymbol} ${MoneyFormat(tableData['later_payment'])}`} size="small" />
+                                </Stack>
+                                <Stack direction="column" justifyContent="flex-start">
+                                  Staggered: <Chip color="primary" label={`${currencySymbol} ${MoneyFormat(tableData['staggered_payment'])}`} size="small" />
+                                </Stack>
+                              </Stack>
+                            </Box>
+                          </Card>
+                        )}
+
+                        {tableData['payment_type'] === 'FULL_PAYMENT' && (
+                          <Card variant="outlined">
+                            <Divider />
+                            <Box sx={{ p: 2 }}>
+                              <Stack direction="column" spacing={1} justifyContent="flex-start">
+                                <Stack direction="column" justifyContent="flex-start">
+                                  Full Payment: <Chip color="primary" label={`${currencySymbol} ${MoneyFormat(tableData['price'])}`} size="small" />
+                                </Stack>
+                              </Stack>
+                            </Box>
+                          </Card>
+                        )}
+
+                        {tableData['payment_type'] === 'FULL_DOWNPAYMENT' && (
+                          <Card variant="outlined">
+                            <Divider />
+                            <Box sx={{ p: 2 }}>
+                              <Stack direction="column" spacing={1} justifyContent="flex-start">
+                                <Stack direction="column" justifyContent="flex-start">
+                                  Full DP: <Chip color="primary" label={`${currencySymbol} ${MoneyFormat(tableData['downpayment'])}`} size="small" />
+                                </Stack>
+                              </Stack>
+                            </Box>
+                          </Card>
+                        )}
+                      </>
+                    ) : item.type == "payment_type" ? (
                       <>
                         {GlobaStatus?.RELEASE_PAYMENT_TYPE[tableData[item?.apiKey]]}
                       </>

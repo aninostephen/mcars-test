@@ -66,7 +66,7 @@ export function InitValues(oldData, updateId) {
     backup_unit: updateId ? oldData?.backup_unit || 'NO' : 'NO',
     due_date: updateId ? parseInt(oldData?.due_date) || '' : '',
     month_paid: updateId ? parseInt(oldData?.month_paid) || '' : '',
-    amort_amount: updateId ? parseInt(oldData?.amort_amount) || '' : '',
+    amort_amount: updateId ? oldData?.amort_amount || '' : '',
     bank_name: updateId ? oldData?.bank_name || '' : '',
     month_contract: updateId ? parseInt(oldData?.month_contract) || '' : '',
     account_no: updateId ? oldData?.account_no || '' : '',

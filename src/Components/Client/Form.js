@@ -9,6 +9,8 @@ import Loader from "../CommonComponent/Loader";
 import UserDetail1 from "./UserDetail1";
 import UserAddress from "./UserAddress";
 import UserPassword from "./UserPassword";
+import ClientInfo from "./ClientInfo";
+import { NumericFormat } from "@/Utils/utils";
 
 const ClientForm = ({ mutate, loading, updateId, fixedRole,noRoleField, addAddress, type }) => {
 
@@ -29,8 +31,13 @@ const ClientForm = ({ mutate, loading, updateId, fixedRole,noRoleField, addAddre
         password: "",
         password_confirmation: "",
         status: updateId ? Boolean(Number(oldData?.data?.status)) : true,
-        address: [],
-        country_code: updateId ? oldData?.data?.country_code || '' : "91"
+        country_code: updateId ? oldData?.data?.country_code || '' : "91",
+        age: updateId ? Number(oldData?.data?.client_information?.age) || "" : "",
+        job: updateId ? oldData?.data?.client_information?.job || "" : "",
+        montly_income: updateId ? oldData?.data?.client_information?.montly_income || '' : '',
+        address: updateId ? oldData?.data?.client_information?.address || '' : '',
+        purpose: updateId ? oldData?.data?.client_information?.purpose || '' : '',
+        marital_status: updateId ? oldData?.data?.client_information?.marital_status || '' : '',
       }}
       validationSchema={YupObject({
         name: nameSchema,
@@ -38,6 +45,9 @@ const ClientForm = ({ mutate, loading, updateId, fixedRole,noRoleField, addAddre
         phone: phoneSchema,
         password: !updateId && passwordSchema,
         password_confirmation: !updateId && passwordConfirmationSchema,
+        age: nameSchema,
+        address: nameSchema,
+        marital_status: nameSchema,
       })}
       onSubmit={(values) => {
         if (updateId) {
@@ -50,9 +60,11 @@ const ClientForm = ({ mutate, loading, updateId, fixedRole,noRoleField, addAddre
         values["status"] = Number(values["status"]);
         if (addAddress) values["address"][0]["is_default"] = Number(values["address"][0]["is_default"]) || false;
         if (type) values["address"][0]["type"] = type;
+
+        values.montly_income = NumericFormat(values?.montly_income);
         mutate(values);
       }}>
-      {({ values }) => (
+      {({ values, setFieldValue }) => (
         <Form className="theme-form theme-form-2 mega-form">
           <Row>
             {!addAddress && (
@@ -62,6 +74,7 @@ const ClientForm = ({ mutate, loading, updateId, fixedRole,noRoleField, addAddre
               </>
             )}
             <UserAddress addAddress={addAddress} type={type} />
+            <ClientInfo values={values} setFieldValue={setFieldValue} />
             <FormBtn loading={loading} />
           </Row>
         </Form>
