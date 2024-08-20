@@ -17,7 +17,7 @@ const DetailTable = ({ data, users }) => {
     const { currencySymbol } = useContext(SettingContext);
     const [modal, setModal] = useState(false);
     const [item, setItem] = useState({});
-
+    let isNotPaidNext = true;
     const onHandleModalOpen = (item) => {
         setItem(
             payModal({
@@ -78,7 +78,7 @@ const DetailTable = ({ data, users }) => {
                     {data?.ledger && data?.ledger.map((item, index) => (
                         <tr key={item.id}>
                             <td>
-                                <h6>{item?.due_date}</h6>
+                                <h6 style={{color: item?.is_amort_due_date === '1' ? 'red': ''}}>{item?.due_date}</h6>
                             </td>
                             <td>
                                 <h6>{currencySymbol} {MoneyFormat(item?.amount_paid)}</h6>
@@ -93,9 +93,16 @@ const DetailTable = ({ data, users }) => {
                                 {item?.pay_by ? item?.pay_by === 'BUYER' ? item?.buyer?.name : item?.pay_by : '--'}
                             </td>
                             <td>
-                                {item?.status_amort === 'UNPAID' ? (
-                                    <Btn href="#" className="btn btn-sm" onClick={() => onHandleModalOpen(item)}>PAY</Btn>
-                                ) : <Chip label="Paid" color="success"></Chip>}
+                                {(item?.status_amort === 'UNPAID' && isNotPaidNext) && (
+                                    <>
+                                        {isNotPaidNext = false}
+                                        {
+                                            item?.status_amort === 'UNPAID' ? (
+                                                <Btn href="#" className="btn btn-sm" onClick={() => onHandleModalOpen(item)}>PAY</Btn>
+                                            ) : <Chip label="Paid" color="success"></Chip>
+                                        }
+                                    </>
+                                )}
                             </td>
                         </tr >
                     ))}

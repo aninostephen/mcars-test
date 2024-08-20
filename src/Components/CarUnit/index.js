@@ -4,12 +4,14 @@ import usePermissionCheck from "../../Utils/Hooks/usePermissionCheck";
 import placeHolderImage from "../../../public/assets/images/placeholder.png";
 import { TransactionsStatus } from "@/Utils/Enums";
 import TableFilter from "./components/tableFilter";
+import ShowCard from "../Table/ShowCard";
 
 let filter = {
   stock_status: {},
   unit_status: {},
   transmission: {},
   brand: {},
+  body_type: {},
 };
 
 const CarUnit = ({ data, onHandleFilter, ...props }) => {
@@ -32,7 +34,8 @@ const CarUnit = ({ data, onHandleFilter, ...props }) => {
   if (!data) return null;
   return <>
     <TableFilter filter={filter} onHandleFilter={onHandleFilter} />
-    <ShowTable {...props} headerData={headerObj} moduleName="car_unit" />
+    {/* <ShowTable {...props} headerData={headerObj} moduleName="car_unit" /> */}
+    <ShowCard {...props} headerData={headerObj} moduleName="car_unit"/>
   </>
 };
 

@@ -72,7 +72,7 @@ const ShowTable = ({ current_page, per_page, mutate, isCheck, setIsCheck, url, s
     }
   };
   return (
-    <Table id="table_id" className={`role-table ${headerData?.noCustomClass ? "" : "refund-table"} all-package theme-table datatable-wrapper`}>
+    <Table hover id="table_id" className={`role-table ${headerData?.noCustomClass ? "" : "refund-table"} all-package theme-table datatable-wrapper`}>
       <TableLoader fetchStatus={fetchStatus} />
       <thead>
         <tr>

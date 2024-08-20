@@ -65,7 +65,11 @@ const ReservationForm = ({ mutate, updateId, loading }) => {
                 title="Release Unit"
                 onClick={() => router.push(`/${i18Lang}/transaction/create?unit=${updateId}`)}
               />
-            ) : <Alert severity="info">Remit the reservation fee first, before releasing the unit.</Alert>}
+            ) :
+            oldData?.data?.remit?.is_remitted === REMIT_STATUS.REJECTED 
+              ? <Alert severity="error">This transaction is rejected!</Alert>
+              : <Alert severity="info">Remit the reservation fee first, before releasing the unit.</Alert>
+            }
           
         </>
       )}

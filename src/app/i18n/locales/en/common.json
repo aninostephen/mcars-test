@@ -1001,5 +1001,7 @@
   "DatePaid": "Date Paid",
   "PayBy": "Pay By",
   "Buyer": "Buyer",
-  "MontlyIncome": "Montly Income"
+  "MontlyIncome": "Montly Income",
+  "CurrentMileage": "Current mileage",
+  "FuelType": "Fuel Type"
 }

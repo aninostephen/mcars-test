@@ -12,7 +12,7 @@ const CalendarField = ({ value, setFieldValue, label, name, errors, touched }) =
     return (
         <div className="input-error">
           <Row className="mb-4 align-items-center">
-            <Col sm={2}><Label className="col-form-label form-label-title">{t(label)}<span class="theme-color ms-2 required-dot">*</span></Label></Col>
+            <Col sm={2}><Label className="col-form-label form-label-title">{t(label)}<span className="theme-color ms-2 required-dot">*</span></Label></Col>
             <Col sm={5}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <MobileDatePicker

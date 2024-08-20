@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Card, CardBody, Col, ListGroup, ListGroupItem, Row } from 'reactstrap';
 import {
-    RiAccountPinCircleFill,
-    RiMailOpenFill,
-    RiPhoneFill,
-  } from "react-icons/ri";
+  RiAccountPinCircleFill,
+  RiMailOpenFill,
+  RiPhoneFill,
+} from "react-icons/ri";
 import SimpleInputField from '../InputFields/SimpleInputField';
 import SearchableSelectInput from '../InputFields/SearchableSelectInput';
 import CkEditorComponent from '../InputFields/CkEditorComponent';

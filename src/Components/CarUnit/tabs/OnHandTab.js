@@ -64,7 +64,7 @@ const OnHandTab = ({ values, setFieldValue, errors, updateId, users, touched }) 
             inputprops: {
               name: "driver_user_id",
               id: "driver_user_id",
-              options: users,
+              options: users?.filter((user) => user?.role?.id === 12),
             },
           },
         ]}
@@ -79,7 +79,7 @@ const OnHandTab = ({ values, setFieldValue, errors, updateId, users, touched }) 
             inputprops: {
               name: "backup_user_id",
               id: "backup_user_id",
-              options: users,
+              options: users?.filter((user) => user?.role?.id === 12),
             },
           },
         ]}

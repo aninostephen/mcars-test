@@ -22,7 +22,7 @@ const TopDashSection = () => {
                     <Col xl={3} sm={6}>
                         <div className="card-tiles">
                             <div>
-                                <h6>At Showroom</h6>
+                                <h6>Total Employee</h6>
                                 <h3>0</h3>
                             </div>
                             <div className="icon-box">
@@ -33,7 +33,7 @@ const TopDashSection = () => {
                     <Col xl={3} sm={6}>
                         <div className="card-tiles">
                             <div>
-                                <h6>Sold Unit`</h6>
+                                <h6>Total Client</h6>
                                 <h3>0</h3>
                             </div>
                             <div className="icon-box">
@@ -44,7 +44,7 @@ const TopDashSection = () => {
                     <Col xl={3} sm={6}>
                         <div className="card-tiles">
                             <div>
-                                <h6>Total Users</h6>
+                                <h6>Total Unit</h6>
                                 <h3>0</h3>
                             </div>
                             <div className="icon-box">
@@ -52,19 +52,30 @@ const TopDashSection = () => {
                             </div>
                         </div>
                     </Col>
-                    <Col xl={3} sm={6} >
+                </Row>
+                <Row className='g-3'>
+                    <Col xl={3} sm={6}>
                         <div className="card-tiles">
                             <div>
-                                <h6>Reserve Unit`</h6>
+                                <h6>On-hand unit</h6>
                                 <h3>0</h3>
                             </div>
                             <div className="icon-box">
-                                <RiGroupLine />
+                                <RiWalletLine />
                             </div>
                         </div>
                     </Col>
-                </Row>
-                <Row className='g-3' style={{ marginTop: "10px" }}>
+                    <Col xl={3} sm={6}>
+                        <div className="card-tiles">
+                            <div>
+                                <h6>Reservae Unit</h6>
+                                <h3>0</h3>
+                            </div>
+                            <div className="icon-box">
+                                <RiFileTextLine />
+                            </div>
+                        </div>
+                    </Col>
                     <Col xl={3} sm={6}>
                         <div className="card-tiles">
                             <div>
@@ -72,40 +83,7 @@ const TopDashSection = () => {
                                 <h3>0</h3>
                             </div>
                             <div className="icon-box">
-                                <RiWalletLine />
-                            </div>
-                        </div>
-                    </Col>
-                    <Col xl={3} sm={6}>
-                        <div className="card-tiles">
-                            <div>
-                                <h6>For Delivery</h6>
-                                <h3>0</h3>
-                            </div>
-                            <div className="icon-box">
-                                <RiFileTextLine />
-                            </div>
-                        </div>
-                    </Col>
-                    <Col xl={3} sm={6}>
-                        <div className="card-tiles">
-                            <div>
-                                <h6>Return Unit</h6>
-                                <h3>0</h3>
-                            </div>
-                            <div className="icon-box">
                                 <FiBox />
-                            </div>
-                        </div>
-                    </Col>
-                    <Col xl={3} sm={6} >
-                        <div className="card-tiles">
-                            <div>
-                                <h6>On-Hand</h6>
-                                <h3>0</h3>
-                            </div>
-                            <div className="icon-box">
-                                <RiGroupLine />
                             </div>
                         </div>
                     </Col>

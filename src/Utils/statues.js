@@ -19,6 +19,11 @@ export const Status = {
     'STAGGERED': 'Staggered',
     'FULL_PAYMENT': 'Full Payment',
     'FULL_DOWNPAYMENT': 'Full downpayment'
-  }
+  },
+  REMIT_STATUS: [
+    {'PENDING': 'Pending'},
+    {'APPROVED': 'Approved'},
+    {'REJECTED': 'Rejected'},
+  ]
 }
 

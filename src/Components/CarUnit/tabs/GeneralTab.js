@@ -7,7 +7,7 @@ import { useTranslation } from "@/app/i18n/client";
 import GetValue from "@/Utils/CustomFunctions/GetValue";
 import ToggleInput from "@/Components/InputFields/ToggleInput";
 import Btn from '@/Elements/Buttons/Btn';
-import { MoneyFormat } from "@/Utils/utils";
+import { generateYears, MoneyFormat } from "@/Utils/utils";
 
 const GeneralTab = ({ values, setFieldValue, bodyType, carMake }) => {
   const { i18Lang } = useContext(I18NextContext);
@@ -80,10 +80,7 @@ const GeneralTab = ({ values, setFieldValue, bodyType, carMake }) => {
             inputprops: {
               name: "year",
               id: "year",
-              options: [
-                { id: "2024", name: "2024" },
-                { id: "2023", name: "2023" },
-              ],
+              options: generateYears(),
             },
           },
         ]}
@@ -172,6 +169,37 @@ const GeneralTab = ({ values, setFieldValue, bodyType, carMake }) => {
           },
         ]}
       />
+
+      <SearchableSelectInput
+        nameList={[
+          {
+            title: t("FuelType"),
+            name: "fuel_type",
+            require: "true",
+            inputprops: {
+              name: "fuel_type",
+              id: "fuel_type",
+              options: [
+                { id: "GAS", name: "Gas" },
+                { id: "DIESEL", name: "Diesel" },
+                { id: "ELECTRIC", name: "Electric" },
+              ],
+            },
+          },
+        ]}
+      />
+
+      <SimpleInputField
+        nameList={
+          [
+            { 
+              title: t("CurrentMileage"),
+              name: "current_mileage",
+              require: "true",
+              placeholder: t("CurrentMileage")
+            },
+          ]
+      } />
       
       <SimpleInputField
         nameList={

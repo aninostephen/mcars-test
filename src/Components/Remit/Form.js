@@ -8,7 +8,7 @@ import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import SettingContext from '@/Helper/SettingContext';
-import { Chip, Select } from "@mui/material";
+import { Chip, Divider, Select, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import { REMIT_STATUS } from "@/Utils/Enums";
 import ModalVerification from "../ModalVerification";
@@ -81,17 +81,28 @@ const RemitForm = ({ updateId }) => {
 
   return (
     <>
-      <Stack direction='row' spacing={2.5} sx={{ marginBottom: '10px' }}>
-        <Btn
+      {oldData?.data?.is_remitted === 'APPROVED' && (
+          <Btn
             className="btn-outline btn-lg"
             title="Print"
             onClick={() => setModal(true)}
-        />
+          />
+      )}
+      <Stack direction='row' spacing={2.5} sx={{ marginBottom: '10px', marginTop: '10px' }}>
+        <Stack direction='column' sx={{ width: '100%' }}>
+          <Typography variant="h6">
+            Refference # : {oldData?.data?.ref}
+          </Typography>
+          <Divider />
+        </Stack>
       </Stack>
       <div id="remit-details">
         <Stack direction="column" justifyContent="flex-end" sx={{ width: 180, float: 'right' }}>
-          {oldData?.data?.is_remitted === 'APPROVED' ? (
-            <Chip label="Paid" color="success" />
+          {oldData?.data?.is_remitted === 'APPROVED' || oldData?.data?.is_remitted === 'REJECTED' ? (
+            <>
+              {oldData?.data?.is_remitted === 'APPROVED' && <Chip label="Paid" color="success" />}
+              {oldData?.data?.is_remitted === 'REJECTED' && <Chip label="Rejected" color="error" />}
+            </>
           ) : (
             <FormControl sx={{ m: 1, minWidth: 180, marginBottom: 5, marginLeft: 0 }} size="small">
               <InputLabel id="demo-simple-select-label">Payment Status</InputLabel>
@@ -101,10 +112,9 @@ const RemitForm = ({ updateId }) => {
                 label="Payment Status"
                 onChange={onHandleChange}
               >
-                <MenuItem value="asdas">
+                <MenuItem value="">
                   Select Payment Status
                 </MenuItem>
-                <MenuItem value={REMIT_STATUS.PENDING}>Pending</MenuItem>
                 <MenuItem value={REMIT_STATUS.REJECTED}>Rejected</MenuItem>
                 <MenuItem value={REMIT_STATUS.APPROVED}>Approved</MenuItem>
               </Select>

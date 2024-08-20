@@ -1,13 +1,8 @@
 import React, { useContext, useState } from "react";
 import I18NextContext from "@/Helper/I18NextContext";
 import { useTranslation } from "@/app/i18n/client";
-import SimpleInputField from "@/Components/InputFields/SimpleInputField";
 import SearchableSelectInput from "@/Components/InputFields/SearchableSelectInput";
-
-import useOutsideDropdown from "@/Utils/Hooks/CustomHooks/useOutsideDropdown";
-import { Calendar } from "react-date-range";
-import { dateFormate } from "@/Utils/CustomFunctions/DateFormate";
-import { Alert, Col, Input, Label, Row } from "reactstrap";
+import { Alert, Col, Row } from "reactstrap";
 import { generateCountData } from "@/Utils/utils";
 import CalendarField from "../../components/CalendarField";
 
@@ -29,19 +24,19 @@ const AmortizationPeriod = ({ values, setFieldValue, errors, updateId, touched }
           </Alert>
         </Col>
         <Col md={12}>
-        <Alert color="danger">
-          <h4 className="alert-heading">
-            Reminders
-          </h4>
-          <p>
-            Before you proceed to update, Please double check amortization entry, make sure is correct, because the system will automatically
-            generate a ledger from starting date (Acquired date) paid to maturity date (Ending date)
-          </p>
-          <hr />
-          <p className="mb-0">
-            You can recorrect if no amortization transaction payment made.
-          </p>
-        </Alert>
+          <Alert color="danger">
+            <h4 className="alert-heading">
+              Reminders
+            </h4>
+            <p>
+              Before you proceed to update, Please double check amortization entry, make sure is correct, because the system will automatically
+              generate a ledger from starting date (Acquired date) paid to maturity date (Ending date)
+            </p>
+            <hr />
+            <p className="mb-0">
+              You can recorrect if no amortization transaction payment made.
+            </p>
+          </Alert>
         </Col>
       </Row>
 

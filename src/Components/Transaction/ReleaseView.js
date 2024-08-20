@@ -10,12 +10,13 @@ import {
 import { nameSchema } from '@/Utils/Validation/ValidationSchemas'
 import SettingContext from '@/Helper/SettingContext';
 import { MoneyFormat, NumericFormat } from '@/Utils/utils';
-import { Typography, Divider, ButtonGroup, Button, Chip } from '@mui/material';
+import { Typography, Divider, ButtonGroup, Button, Chip, Alert } from '@mui/material';
 import { Stack } from '@mui/system';
 import { Status } from '@/Utils/statues';
 import ModalVerification from '../ModalVerification';
 import { payModal } from './components/fields';
 import GetRemitStatus from './components/GetRemitStatus';
+import { STOCK_STATUS, STOCK_STATUS_ENUM } from '@/Utils/Enums';
 
 const ReleaseView = ({ reserveData, id }) => {
     const { currencySymbol } = useContext(SettingContext);
@@ -92,7 +93,7 @@ const ReleaseView = ({ reserveData, id }) => {
         );
         setModal(true);
     }
-
+    console.log(reserveData?.car_unit?.stock_status)
     return (
         <div className='save-back-button'>
             <>
@@ -190,6 +191,23 @@ const ReleaseView = ({ reserveData, id }) => {
                             </div>
                         </CardBody>
 
+                        {reserveData?.car_unit?.stock_status === STOCK_STATUS_ENUM.RELEASED && (
+                           <Stack direction='row' sx={{ marginBottom: '20px' }} spacing={1.5}>
+                                <Alert severity="success">
+                                    <Stack direction='column' spacing={1.5}>
+                                        <span>Driver: {reserveData?.car_unit?.driver_user_id ? reserveData?.car_unit?.driver?.name : '--'}</span>
+                                        <span>Phone: {reserveData?.car_unit?.driver_user_id ? reserveData?.car_unit?.driver?.phone : '--'}</span>
+                                    </Stack>
+                                </Alert>
+                                <Alert severity="success">
+                                    <Stack direction='column' spacing={1.5}>
+                                        <span>Backup driver: {reserveData?.car_unit?.driver_user_id ? reserveData?.car_unit?.backup_driver?.name : '--'}</span>
+                                        <span>Phone: {reserveData?.car_unit?.driver_user_id ? reserveData?.car_unit?.backup_driver?.phone : '--'}</span>
+                                    </Stack>
+                                </Alert>
+                           </Stack>
+                        )}
+
                         {reserveData?.payment_type === 'FULL_PAYMENT' && (
                           <>
                             <Stack direction="row" justifyContent="space-between" alignItems="center">
@@ -263,7 +281,7 @@ const ReleaseView = ({ reserveData, id }) => {
                                     Already Payment:
                                 </Typography>
                                 <Typography gutterBottom variant="h7" component="div">
-                                <Chip label={`Paid: ${currencySymbol} ${MoneyFormat(reserveData?.already_payment)}`} color="success" />
+                                    {reserveData?.already_payment && <GetRemitStatus type="already_payment" reserveData={reserveData}/>}
                                 </Typography>
                             </Stack>
                             <Divider mb={1} />

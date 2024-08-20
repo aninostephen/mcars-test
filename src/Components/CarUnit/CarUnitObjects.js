@@ -34,6 +34,8 @@ export const ValidationSchema = {
   month_paid: nameSchema,
   due_date: nameSchema,
   downpayment: nameSchema,
+  current_mileage: nameSchema,
+  fuel_type: nameSchema,
 };
 
 export function InitValues(oldData, updateId) {
@@ -75,6 +77,8 @@ export function InitValues(oldData, updateId) {
     car_thumbnail: updateId ? oldData?.car_thumbnail || '' : '',
     car_unit_galleries: updateId ? oldData?.car_unit_galleries?.map((img) => img) || "" : "",
     car_unit_galleries_id: updateId ? oldData?.product_galleries?.map((elem) => elem.id) || "" : "",
+    current_mileage: updateId ? oldData?.current_mileage || '' : '',
+    fuel_type: updateId ? oldData?.fuel_type || '' : '',
 
     engine_number: updateId ? oldData?.engine_number || '' : '',
     chasis_number: updateId ? oldData?.chasis_number || '' : '',

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useQuery } from "@tanstack/react-query";
 import request from '@/Utils/AxiosUtils';
-import { cm } from '@/Utils/AxiosUtils/API';
+import { bt, cm } from '@/Utils/AxiosUtils/API';
 import { Input} from "reactstrap";
 import { Stack } from "@mui/material";
 import { Status } from '@/Utils/statues';
@@ -14,6 +14,14 @@ const TableFilter = ({ filter, onHandleFilter }) => {
     }), {
       refetchOnWindowFocus: false,
       select: (data) => data.data.data.map((item) => ({ id: item.id, name: item.car_make_name })) 
+    });
+
+    const { data: bodyType } = useQuery([bt], () => request({
+      url: bt,
+      params: { status: 1 }
+    }), {
+      refetchOnWindowFocus: false,
+      select: (data) => data.data.data.map((item) => ({ id: item.id, name: item.body_type_name })) 
     });
 
     const onChangeFilter = (e) => {
@@ -90,6 +98,24 @@ const TableFilter = ({ filter, onHandleFilter }) => {
                     All Brand
                 </option>
                 {carMake && carMake.map((i) => (
+                    <option value={i.id}>
+                        {i.name}
+                    </option>
+                ))}
+            </Input>
+
+            <Input
+                name="body_type"
+                type="select"
+                onChange={(e) => onChangeFilter(e)}
+                style={{
+                width: '200px'
+                }}
+            >
+                <option value="">
+                    All body type
+                </option>
+                {bodyType && bodyType.map((i) => (
                     <option value={i.id}>
                         {i.name}
                     </option>
