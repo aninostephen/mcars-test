@@ -40,10 +40,16 @@ export const STOCK_STATUS = {
   'ON-HAND': 'On-hand',
   PENDING: 'Pending',
   RELEASED: 'Release',
+  FOR_APPROVAL: 'For Approval',
+  FOR_RETURN: 'For Return',
+  RETURN: 'Return Unit',
 };
 
 export const STOCK_STATUS_ENUM = {
   'ON-HAND': 'ON-HAND',
   PENDING: 'PENDING',
   RELEASED: 'RELEASED',
+  FOR_APPROVAL: 'FOR_APPROVAL',
+  FOR_RETURN: 'FOR_RETURN',
+  RETURN: 'RETURN',
 };

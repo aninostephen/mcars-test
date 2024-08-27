@@ -10,7 +10,7 @@ import {
 import { nameSchema } from '@/Utils/Validation/ValidationSchemas'
 import SettingContext from '@/Helper/SettingContext';
 import { MoneyFormat, NumericFormat } from '@/Utils/utils';
-import { Typography, Divider, ButtonGroup, Button, Chip, Alert } from '@mui/material';
+import { Typography, Divider, ButtonGroup, Button, Chip, Alert, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import { Stack } from '@mui/system';
 import { Status } from '@/Utils/statues';
 import ModalVerification from '../ModalVerification';
@@ -93,7 +93,50 @@ const ReleaseView = ({ reserveData, id }) => {
         );
         setModal(true);
     }
-    console.log(reserveData?.car_unit?.stock_status)
+
+    const onhandleReturnUnit = (e) => {
+        const status = e.target.value;
+        const info = [
+            {
+                label: 'Car Unit',
+                value: reserveData?.car_unit?.car_name
+            },
+            {
+                label: 'Status',
+                value: reserveData?.car_unit?.stock_status
+            },
+        ]
+
+        const itemKey = {
+            password: '',
+            car_unit_id: reserveData?.car_unit?.id,
+            driver_user_id: '',
+            backup_user_id: '',
+            stock_status: status,
+        };
+
+        const validation = {
+            password: nameSchema,
+            car_unit_id: nameSchema,
+            driver_user_id: status === STOCK_STATUS_ENUM.RETURN ? nameSchema : '',
+            backup_user_id: status === STOCK_STATUS_ENUM.RETURN ? nameSchema : '',
+            stock_status: nameSchema,
+        };
+
+        setItem(
+            payModal({
+                api: '/for-return',
+                redirection: '/transaction',
+                title: "For Return Unit",
+                info: info,
+                itemKey: itemKey,
+                validation: validation,
+            })
+        );
+
+        if (status) setModal(true);
+    }
+
     return (
         <div className='save-back-button'>
             <>
@@ -190,7 +233,44 @@ const ReleaseView = ({ reserveData, id }) => {
                                 </div>
                             </div>
                         </CardBody>
-
+                        {reserveData?.car_unit?.stock_status === STOCK_STATUS_ENUM.FOR_RETURN && (
+                            <Stack direction='column' sx={{width: 250}}>
+                                <FormControl sx={{ m: 1, Width: 250, marginBottom: 5, marginLeft: 0 }} size="small">
+                                    <InputLabel id="demo-simple-select-label">Select Status</InputLabel>
+                                    <Select
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+                                        label="Payment Status"
+                                        onChange={onhandleReturnUnit}
+                                    >
+                                        <MenuItem value="">
+                                            Select Status
+                                        </MenuItem>
+                                        <MenuItem value={STOCK_STATUS_ENUM.RELEASED}>Back to Released</MenuItem>
+                                        <MenuItem value={STOCK_STATUS_ENUM.RETURN}>Return Unit</MenuItem>
+                                    </Select>
+                                </FormControl>
+                            </Stack>
+                        )}
+                        {reserveData?.car_unit?.stock_status === STOCK_STATUS_ENUM.RETURN && (
+                            <Stack direction='column' sx={{width: 250}}>
+                                <FormControl sx={{ m: 1, Width: 250, marginBottom: 5, marginLeft: 0 }} size="small">
+                                    <InputLabel id="demo-simple-select-label">Select Status</InputLabel>
+                                    <Select
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+                                        label="Payment Status"
+                                        onChange={onhandleReturnUnit}
+                                    >
+                                        <MenuItem value="">
+                                            Select Status
+                                        </MenuItem>
+                                        <MenuItem value={STOCK_STATUS_ENUM.RELEASED}>Back to Released</MenuItem>
+                                        <MenuItem value={STOCK_STATUS_ENUM['ON-HAND']}>Return to On-Hand</MenuItem>
+                                    </Select>
+                                </FormControl>
+                            </Stack>
+                        )}
                         {reserveData?.car_unit?.stock_status === STOCK_STATUS_ENUM.RELEASED && (
                            <Stack direction='row' sx={{ marginBottom: '20px' }} spacing={1.5}>
                                 <Alert severity="success">

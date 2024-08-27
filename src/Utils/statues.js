@@ -3,6 +3,8 @@ export const Status = {
     {'ON-HAND': 'On-hand'},
     {'PENDING': 'Pending'},
     {'RELEASED': 'Release'},
+    {'FOR_RETURN': 'For Return'},
+    {'RETURN': 'Return Unit'},
   ],
   UNIT_STATUS: [
     {'BRAND_NEW': 'Brand New'},

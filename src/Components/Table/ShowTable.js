@@ -120,7 +120,7 @@ const ShowTable = ({ current_page, per_page, mutate, isCheck, setIsCheck, url, s
                 {headerData?.column.map((item, i) => (
                   <td className={item.type == "image" ? "sm-width" : ""} key={i} onClick={(e) => item.type !== "switch" && isHandelEdit(e, tableData, headerData)}>
                     {item.type == "date" ? (
-                      <>{dateFormate(tableData[item?.apiKey])}</>
+                      <>{dateFormate(tableData[item?.apiKey], true)}</>
                     ) : item.type == "image" ? (
                       <Avatar data={tableData[item?.apiKey]} placeHolder={item.placeHolderImage} name={tableData} />
                     ) : item.type == "price" ? (
@@ -190,6 +190,8 @@ const ShowTable = ({ current_page, per_page, mutate, isCheck, setIsCheck, url, s
                       </>
                     ) : item.type == "switch" ? (
                       <>{!edit || headerData?.data?.[index].system_reserve == "1" ? <Status data={tableData} url={url} disabled={true} /> : <Status data={tableData} url={item.url ? item.url : url} apiKey={item.url && item.apiKey} />}</>
+                    ) : item.type == "switch1" ? (
+                      <>{!edit || headerData?.data?.[index].system_reserve == "1" ? <Status data={tableData} url={url} disabled={true} /> : <Status data={tableData} url={item.url ? item.url : url} apiKey={item.apiKey} />}</>
                     ) : item.type == "stock_status" ? (
                       <>
                         <div className={`status-${tableData[item?.apiKey]}`}>

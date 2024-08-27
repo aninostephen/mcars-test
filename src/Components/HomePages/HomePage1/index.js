@@ -30,7 +30,6 @@ const HomePageOneForm = ({ title }) => {
         refRefetch?.current?.call()
     });
     let NewSettingsData = data || {};
-    console.log(data)
     let IncludeList = ['status']
     RecursiveSet({ data: NewSettingsData, IncludeList })
 

@@ -116,10 +116,12 @@ const UnitAction = ({ data, users }) => {
                     <div className="d-flex align-items-center">
                         <h5>{("Summary")}</h5>
                     </div>
-                    <Stack direction="row" spacing={2}>
-                        <Link href="#" onClick={(e) => onHandleFullPaid(e)} className="btn btn-animation btn-sm">{t("FullPaidNow")}</Link>
-                        <Link href="#" onClick={(e) => onHandleDeleteLedger(e)} className="btn btn-animation btn-sm btn-outline">{t("DeleteLedger")}</Link>
-                    </Stack>
+                    {data?.month_contract !== data?.amort_month_paid && (
+                        <Stack direction="row" spacing={2}>
+                            <Link href="#" onClick={(e) => onHandleFullPaid(e)} className="btn btn-animation btn-sm">{t("FullPaidNow")}</Link>
+                            <Link href="#" onClick={(e) => onHandleDeleteLedger(e)} className="btn btn-animation btn-sm btn-outline">{t("DeleteLedger")}</Link>
+                        </Stack>
+                    )}
                 </div>
                 <div className="tracking-total tracking-wrapper">
                     <ul>

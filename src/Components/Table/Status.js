@@ -45,6 +45,7 @@ const Status = ({ url, data, disabled, apiKey }) => {
     mutate(Boolean(Number(value)));
     setModal(false);
   };
+
   return (
     <>
       <FormGroup switch className="ps-0 form-switch form-check">

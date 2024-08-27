@@ -1,14 +1,23 @@
-import { nameSchema } from '@/Utils/Validation/ValidationSchemas';
 import SimpleInputField from '@/Components/InputFields/SimpleInputField';
-import CalendarField from "@/Components/InputFields/CalendarField";
-import FileUploadField from "@/Components/InputFields/FileUploadField";
-import { getHelperText } from "@/Utils/CustomFunctions/getHelperText";
-import SearchableSelectInput from '@/Components/InputFields/SearchableSelectInput';
+import ForReturnUnit from './ForReturnUnit';
+import { STOCK_STATUS_ENUM } from '@/Utils/Enums';
+import ForOnHandUnit from './ForOnHandUnit';
 
 export const payModal = ({api, redirection, title, info, itemKey, validation}) => ({
     data: info,
     fields: () => (
         <>
+            {(title === 'For Return Unit' && itemKey?.stock_status) && (
+                <>
+                    {itemKey?.stock_status === STOCK_STATUS_ENUM.RETURN && (
+                        <ForReturnUnit itemKey={itemKey} />
+                    )}
+
+                    {itemKey?.stock_status === STOCK_STATUS_ENUM['ON-HAND'] && (
+                        <ForOnHandUnit itemKey={itemKey} />
+                    )}
+                </>
+            )}
             <SimpleInputField 
                 nameList={
                 [

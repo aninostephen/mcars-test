@@ -145,6 +145,7 @@ export const VendorSettingAPI = '/updateStoreProfile'
 // Dashboard API
 export const StatisticsCountAPI = '/statistics/count'
 export const DashboardChartAPI = "/dashboard/chart"
+export const mcarsdt = "/dashboard/dt-mcars"
 
 // Question And Answer
 export const QuestionNAnswerAPI = "/question-and-answer"
@@ -157,3 +158,4 @@ export const release = "/release";
 export const reservation = "/reservation";
 export const culedger = "/cu-ledger";
 export const remit = "/remit";
+export const inquiry = '/inquiry-be';

@@ -120,7 +120,7 @@ function UnitInformation({ unit, values, setFieldValue }) {
                         <SearchableSelectInput
                             nameList={[
                             {
-                                title: "Release Type",
+                                title: "Payment Type",
                                 name: "release_type",
                                 require: "true",
                                 inputprops: {
@@ -128,7 +128,7 @@ function UnitInformation({ unit, values, setFieldValue }) {
                                     id: "release_type",
                                     options: [
                                         { id: "SELL", name: "Sell" },
-                                        { id: "TRADE", name: "Trade" },
+                                        { id: "TRADE", name: "Trade-In" },
                                     ],
                                 },
                             },
@@ -146,7 +146,7 @@ function UnitInformation({ unit, values, setFieldValue }) {
                                     id: "payment_type",
                                     options: [
                                         { id: "STAGGERED", name: "Staggered Payment" },
-                                        { id: "FULL_PAYMENT", name: "Full Payment" },
+                                        { id: "FULL_PAYMENT", name: "Full Payment(Cash Unit)" },
                                         { id: "FULL_DOWNPAYMENT", name: "Full Downpayment" },
                                     ],
                                 },

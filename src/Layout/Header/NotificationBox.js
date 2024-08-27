@@ -22,6 +22,14 @@ const NotificationBox = ({ isComponentVisible, setIsComponentVisible }) => {
   );
 
   useEffect(() => {
+    const interval = setInterval(() => {
+      refetch();
+    }, 15000); // Poll every 15 seconds
+
+    return () => clearInterval(interval);
+  }, [])
+
+  useEffect(() => {
     refetch();
   }, [isLoading])
 

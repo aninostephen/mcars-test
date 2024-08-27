@@ -31,11 +31,13 @@ export const ValidationSchema = {
   amort_amount: nameSchema,
   amort_start_date: nameSchema,
   amort_end_date: nameSchema,
-  month_paid: nameSchema,
+  //month_paid: nameSchema,
   due_date: nameSchema,
   downpayment: nameSchema,
   current_mileage: nameSchema,
   fuel_type: nameSchema,
+  body_color: nameSchema,
+  start_on: nameSchema,
 };
 
 export function InitValues(oldData, updateId) {
@@ -53,6 +55,8 @@ export function InitValues(oldData, updateId) {
     status: updateId ? Boolean(oldData?.status) : true,
     pickup_destination: updateId ? oldData?.pickup_destination || "" : "",
     on_handling_payment: updateId ? oldData?.on_handling_payment || "" : "",
+    body_color: updateId ? oldData?.body_color || "" : "",
+    start_on: updateId ? oldData?.start_on || "" : "",
     remarks: updateId ? oldData?.remarks || "" : "",
     driver_user_id: updateId ? oldData?.driver_user_id || "" : "",
     backup_user_id: updateId ? oldData?.backup_user_id || "" : "",

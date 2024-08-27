@@ -88,6 +88,14 @@ const MENUITEMS = [
   //   ],
   // },
   {
+    title: "Inquiries",
+    displayTitle: "Inquiries",
+    icon: <RiTruckLine />,
+    path: "/inquiriy_unit",
+    permission: ["inquiriy_unit.index", "inquiriy_unit.create"],
+    type: "link"
+  },
+  {
     title: "Media",
     displayTitle: "Media",
     icon: <RiImageLine />,

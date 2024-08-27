@@ -98,6 +98,36 @@ const GeneralTab = ({ values, setFieldValue, bodyType, carMake }) => {
           ]
       } />
 
+      <SimpleInputField
+        nameList={
+          [
+            { 
+              title: t("BodyColor"),
+              name: "body_color",
+              require: "true",
+              placeholder: t("BodyColor")
+            },
+          ]
+      } />
+
+      <SearchableSelectInput
+        nameList={[
+          {
+            title: t("StartOn"),
+            name: "start_on",
+            require: "true",
+            inputprops: {
+              name: "start_on",
+              id: "start_on",
+              options: [
+                { id: "PUSH_BUTTON", name: "Push Button" },
+                { id: "KEY_START", name: "Key Start" },
+              ],
+            },
+          },
+        ]}
+      />
+
       <SearchableSelectInput
         nameList={[
           {
