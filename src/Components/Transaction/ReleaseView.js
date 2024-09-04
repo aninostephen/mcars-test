@@ -1,6 +1,5 @@
 'use client'
-import React, { useEffect, useState, useContext } from 'react'
-import { useQuery } from "@tanstack/react-query";
+import React, { useState, useContext } from 'react'
 import { Card, CardBody, Col, Row, ListGroup, ListGroupItem } from 'reactstrap'
 import {
   RiAccountPinCircleFill,
@@ -9,14 +8,14 @@ import {
 } from "react-icons/ri";
 import { nameSchema } from '@/Utils/Validation/ValidationSchemas'
 import SettingContext from '@/Helper/SettingContext';
-import { MoneyFormat, NumericFormat } from '@/Utils/utils';
+import { MoneyFormat, paymentStatusColor, paymentStatusUtils } from '@/Utils/utils';
 import { Typography, Divider, ButtonGroup, Button, Chip, Alert, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import { Stack } from '@mui/system';
 import { Status } from '@/Utils/statues';
 import ModalVerification from '../ModalVerification';
 import { payModal } from './components/fields';
 import GetRemitStatus from './components/GetRemitStatus';
-import { STOCK_STATUS, STOCK_STATUS_ENUM } from '@/Utils/Enums';
+import { STOCK_STATUS_ENUM } from '@/Utils/Enums';
 
 const ReleaseView = ({ reserveData, id }) => {
     const { currencySymbol } = useContext(SettingContext);
@@ -137,6 +136,35 @@ const ReleaseView = ({ reserveData, id }) => {
         if (status) setModal(true);
     }
 
+    const ActionBtn = ({isDt, data, type, payment}) => {
+        if (isDt === 0) {
+            return (
+                <>
+                    <ButtonGroup
+                        variant="contained"
+                        aria-label="Button group with a nested menu"
+                        onClick={() => onHandleModalOpen({type: type, payment: payment})}
+                    >
+                        <Button>{currencySymbol} {MoneyFormat(payment)}</Button>
+                        <Button
+                            size="small"
+                            aria-label="select merge strategy"
+                            aria-haspopup="menu"
+                        >
+                            PAY
+                        </Button>
+                    </ButtonGroup>
+                </>
+            );
+        }
+
+        if (isDt === 1 || isDt === 2) {
+            return (
+                <GetRemitStatus type={type} reserveData={data}/>
+            );
+        }
+    }
+
     return (
         <div className='save-back-button'>
             <>
@@ -192,13 +220,13 @@ const ReleaseView = ({ reserveData, id }) => {
                           </CardBody>
                           <ListGroup flush>
                               <ListGroupItem>
-                                  <RiAccountPinCircleFill /> {reserveData?.old_owner.name}
+                                  <RiAccountPinCircleFill /> {reserveData?.old_owner?.name}
                               </ListGroupItem>
                               <ListGroupItem>
-                                  <RiMailOpenFill /> {reserveData?.old_owner.email}
+                                  <RiMailOpenFill /> {reserveData?.old_owner?.email}
                               </ListGroupItem>
                               <ListGroupItem>
-                                  <RiPhoneFill /> {reserveData?.old_owner.phone}
+                                  <RiPhoneFill /> {reserveData?.old_owner?.phone}
                               </ListGroupItem>
                           </ListGroup>
                           <CardBody>
@@ -301,20 +329,14 @@ const ReleaseView = ({ reserveData, id }) => {
                             <Divider mb={1} />
                             <Stack direction="row" justifyContent="space-between" alignItems="center">
                                 <Typography gutterBottom variant="h7" component="div">
-                                    Downpayment:
+                                    Amount:
                                 </Typography>
-                                <Typography color="green" gutterBottom variant="h7" component="div">
-                                    <Chip label={`Paid: ${currencySymbol} ${MoneyFormat(reserveData?.price)}`} color="success" />
-                                </Typography>
-                            </Stack>
-                            <Divider mb={1} />
-                            <Stack direction="row" justifyContent="space-between" alignItems="center">
-                                <Typography gutterBottom variant="h7" component="div">
-                                    Status:
-                                </Typography>
-                                <Typography color="green" gutterBottom variant="h7" component="div">
-                                    Paid
-                                </Typography>
+                                <ActionBtn
+                                    isDt={reserveData?.is_paid_fullpayment}
+                                    data={reserveData}
+                                    type='full_payment'
+                                    payment={reserveData?.price}
+                                />
                             </Stack>
                             <Stack mb={2}>
                                 <Divider mb={3} />
@@ -336,19 +358,14 @@ const ReleaseView = ({ reserveData, id }) => {
                                 <Typography gutterBottom variant="h7" component="div">
                                     Downpayment:
                                 </Typography>
-                                <Typography color="green" gutterBottom variant="h7" component="div">
-                                    <Chip label={`Paid: ${currencySymbol} ${MoneyFormat(reserveData?.downpayment)}`} color="success" />
-                                </Typography>
+                                <ActionBtn
+                                    isDt={reserveData?.is_paid_fulldownpayment}
+                                    data={reserveData}
+                                    type='full_downpayment'
+                                    payment={reserveData?.downpayment}
+                                />
                             </Stack>
                             <Divider mb={1} />
-                            <Stack direction="row" justifyContent="space-between" alignItems="center">
-                                <Typography gutterBottom variant="h7" component="div">
-                                    Status:
-                                </Typography>
-                                <Typography color="green" gutterBottom variant="h7" component="div">
-                                    Paid
-                                </Typography>
-                            </Stack>
                             <Stack mb={2}>
                                 <Divider mb={3} />
                             </Stack>
@@ -358,11 +375,30 @@ const ReleaseView = ({ reserveData, id }) => {
                           <>
                             <Stack direction="row" justifyContent="space-between" alignItems="center">
                                 <Typography gutterBottom variant="h7" component="div">
-                                    Already Payment:
+                                    First payment:
                                 </Typography>
-                                <Typography gutterBottom variant="h7" component="div">
-                                    {reserveData?.already_payment && <GetRemitStatus type="already_payment" reserveData={reserveData}/>}
-                                </Typography>
+                                {reserveData?.is_paid_already_payment ? (
+                                    <>
+                                        <GetRemitStatus type="already_payment" reserveData={reserveData}/>
+                                    </>
+                                ) : (
+                                    <>
+                                        <ButtonGroup
+                                            variant="contained"
+                                            aria-label="Button group with a nested menu"
+                                            onClick={() => onHandleModalOpen({type: 'already_payment', payment: reserveData?.already_payment})}
+                                        >
+                                            <Button>{currencySymbol} {MoneyFormat(reserveData?.already_payment)}</Button>
+                                            <Button
+                                                size="small"
+                                                aria-label="select merge strategy"
+                                                aria-haspopup="menu"
+                                            >
+                                                PAY
+                                            </Button>
+                                        </ButtonGroup>
+                                    </>
+                                )}
                             </Stack>
                             <Divider mb={1} />
                             <Stack direction="row" justifyContent="space-between" alignItems="center" mt={1}>
@@ -420,16 +456,6 @@ const ReleaseView = ({ reserveData, id }) => {
                                         </ButtonGroup>
                                     </>
                                 )}
-                                
-                            </Stack>
-                            <Divider mb={1} />
-                            <Stack direction="row" justifyContent="space-between" alignItems="center" mt={1}>
-                                <Typography gutterBottom variant="h7" component="div">
-                                    Downpayment:
-                                </Typography>
-                                <Typography color="red" gutterBottom variant="h7" component="div">
-                                    {currencySymbol} {MoneyFormat(reserveData?.car_unit?.downpayment)}
-                                </Typography>
                             </Stack>
                             <Stack mb={2}>
                                 <Divider mb={3} />

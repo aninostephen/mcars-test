@@ -13,7 +13,7 @@ const GetRemitStatus = ({ type, reserveData }) => {
 
     if (reserveData?.remit) {
         remit = reserveData?.remit?.filter((item) => item.payment_type === type)[0];
-        amount = remit.amount;
+        amount = remit?.amount;
     } else {
         switch (type) {
             case 'is_paid_later':
@@ -22,9 +22,12 @@ const GetRemitStatus = ({ type, reserveData }) => {
             case 'staggered_payment':
                 amount = reserveData?.staggered_payment;
                 break;
+            case 'already_payment':
+                console.log(remit)
+                amount = reserveData?.already_payment;
+                break;
         }
     }
-
     if (remit?.is_remitted === REMIT_STATUS.PENDING) {
         paymentStatus = 'Not yet remitted';
         colorStatus = 'warning'

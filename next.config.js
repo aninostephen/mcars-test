@@ -3,9 +3,9 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   env: {
-    //For Local Server
-    //API_PROD_URL: "https://api.fabteecraft.com/api/",
-    API_PROD_URL: "https://api.fabteecraft.com/api/",
+    // For Local Server
+	API_PROD_URL: "https://api.mcars.ph/api/",
+    //API_PROD_URL: "http://localhost:8000/api/",
   },
   redirects: async () => {
     return [
@@ -20,14 +20,14 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: "https",
-        hostname: "api.fabteecraft.com",
+        protocol: "http",
+        hostname: "localhost",
         port: "8000",
         pathname: '/storage/**'
       },
       {
-        protocol: "https",
-        hostname: "api.fabteecraft.com",
+        protocol: "http",
+        hostname: "localhost",
         port: "8000",
         pathname: '/frontend/**'
       },
@@ -38,12 +38,12 @@ const nextConfig = {
       //   pathname: '/fastkart/**'
       // },
       {
-        protocol: "https",
-        hostname: "api.fabteecraft.com",
+        protocol: "http",
+        hostname: "127.0.0.1:8000",
       },
       {
-        protocol: "https",
-        hostname: "api.fabteecraft.com",
+        protocol: "http",
+        hostname: "localhost",
       },
     ],
     // remotePatterns: [

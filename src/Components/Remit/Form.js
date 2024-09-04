@@ -4,19 +4,16 @@ import request from "@/Utils/AxiosUtils";
 import Loader from "../CommonComponent/Loader";
 import DetailTable from "./DetailTable";
 import ReleaseStation from "./components/ReleaseStation";
-import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
 import SettingContext from '@/Helper/SettingContext';
-import { Chip, Divider, Select, Typography } from "@mui/material";
+import { Divider, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
-import { REMIT_STATUS } from "@/Utils/Enums";
 import ModalVerification from "../ModalVerification";
 import { nameSchema } from "@/Utils/Validation/ValidationSchemas";
 import { PayModal } from "./components/PayModal";
 import { MoneyFormat } from "@/Utils/utils";
 import Btn from "@/Elements/Buttons/Btn";
 import ModalPrint from "./ModalPrint";
+import TermsInfo from "./TermsInfo";
 
 const RemitForm = ({ updateId }) => {
   const { currencySymbol } = useContext(SettingContext);
@@ -32,6 +29,9 @@ const RemitForm = ({ updateId }) => {
 
   const onHandleChange = (e) => {
     const value = e.target.value;
+    if (value === '') {
+      return false;
+    }
     let info = [],
     itemKey = {},
     validation = {};
@@ -97,32 +97,15 @@ const RemitForm = ({ updateId }) => {
         </Stack>
       </Stack>
       <div id="remit-details">
-        <Stack direction="column" justifyContent="flex-end" sx={{ width: 180, float: 'right' }}>
-          {oldData?.data?.is_remitted === 'APPROVED' || oldData?.data?.is_remitted === 'REJECTED' ? (
-            <>
-              {oldData?.data?.is_remitted === 'APPROVED' && <Chip label="Paid" color="success" />}
-              {oldData?.data?.is_remitted === 'REJECTED' && <Chip label="Rejected" color="error" />}
-            </>
-          ) : (
-            <FormControl sx={{ m: 1, minWidth: 180, marginBottom: 5, marginLeft: 0 }} size="small">
-              <InputLabel id="demo-simple-select-label">Payment Status</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                label="Payment Status"
-                onChange={onHandleChange}
-              >
-                <MenuItem value="">
-                  Select Payment Status
-                </MenuItem>
-                <MenuItem value={REMIT_STATUS.REJECTED}>Rejected</MenuItem>
-                <MenuItem value={REMIT_STATUS.APPROVED}>Approved</MenuItem>
-              </Select>
-            </FormControl>
-          )}
-        </Stack>
         <ReleaseStation data={oldData?.data}/>
-        <DetailTable data={oldData} />
+        <Divider />
+        {(oldData?.data && oldData?.data?.reservations) && (
+          <TermsInfo data={oldData?.data} />
+        )}
+        <DetailTable
+          data={oldData}
+          onHandleChange={onHandleChange}
+        />
       </div>
       {oldData?.data?.is_remitted !== 'APPROVED' && (
         <ModalVerification

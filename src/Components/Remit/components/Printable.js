@@ -2,6 +2,7 @@ import { Typography } from '@mui/material';
 import { Stack } from '@mui/system';
 import React from 'react';
 import DetailTable from '../DetailTable';
+import TermsInfo from '../TermsInfo';
 
 const Header = () => {
     return (
@@ -44,7 +45,10 @@ const Header = () => {
 
 const Body = ({ data }) => {
     return (
-        <DetailTable data={data}/>
+        <>
+            <TermsInfo data={data?.data} />
+            <DetailTable data={data}/>
+        </>
     );
 }
 

@@ -13,6 +13,7 @@ const CarMakeCreate = () => {
         moduleName="Release Station"
         isCheck={isCheck}
         setIsCheck={setIsCheck}
+        onlyTitle={true}
       />
     </Col>
   );

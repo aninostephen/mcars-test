@@ -53,3 +53,15 @@ export const STOCK_STATUS_ENUM = {
   FOR_RETURN: 'FOR_RETURN',
   RETURN: 'RETURN',
 };
+
+export const PAYMENT_TYPE = {
+  STAGGERED: 'STAGGERED',
+  FULL_PAYMENT: 'FULL_PAYMENT',
+  FULL_DOWNPAYMENT: 'FULL_DOWNPAYMENT',
+};
+
+export const PAYMENT_TYPE_STRING = {
+  STAGGERED: 'Staggered',
+  FULL_PAYMENT: 'Full payment',
+  FULL_DOWNPAYMENT: 'Full downpayment',
+};

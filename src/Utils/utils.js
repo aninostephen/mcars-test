@@ -68,3 +68,42 @@ export const getNextPayableAmortization = (data) => {
   const amort = data.filter((dt) => dt?.status_amort === 'UNPAID');
   return amort.length > 0 ? dayjs(amort[0]?.due_date).format('MMM, D, YYYY') : '';
 }
+
+export const getValueById = (id, units) => {
+  if (!id) return [];
+  return units.filter((unit) => unit?.id === id);
+}
+
+export const paymentStatusUtils = (dt) => {
+  let paymentStatus;
+  switch(dt){
+      case 0:
+          paymentStatus = '--'
+          break;
+      case 1:
+          paymentStatus = 'Waiting for approved'
+          break;
+      case 2:
+          paymentStatus = 'Paid'
+          break;
+  }
+
+  return paymentStatus;
+}
+
+export const paymentStatusColor = (dt) => {
+  let paymentStatus;
+  switch(dt){
+      case 0:
+          paymentStatus = 'warning'
+          break;
+      case 1:
+          paymentStatus = 'warning'
+          break;
+      case 2:
+          paymentStatus = 'warning'
+          break;
+  }
+
+  return paymentStatus;
+}
