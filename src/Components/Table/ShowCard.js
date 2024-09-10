@@ -50,6 +50,7 @@ const ShowCard = ({ headerData, moduleName }) => {
                                             {item?.car_name}
                                         </Typography>
                                          <Stack direction='row' spacing={1}>
+                                            <Chip label={item?.status ? 'Listed': 'Not Listed'} color={item?.status ? 'primary': 'warning'} />
                                             <Chip label={TRANSACTION[item?.transactions]} color="primary" />
                                             <Chip label={STOCK_STATUS[item?.stock_status]} color="primary" />
                                             {item?.is_amort_due_date == '1' && (

@@ -137,12 +137,12 @@ const FormReservation = ({
 
                     <CheckBoxField name="status" />
                     <div className="ms-auto justify-content-end dflex-wgap mt-sm-4 mt-2 save-back-button">
-                    <Btn className="btn-outline btn-lg" title="Back" onClick={() => router.back()} />
-                    <Btn className="btn-primary btn-lg" onClick={() => handleModalPopup(values)} title="submit" loading={Number(loading)} />
+                        <Btn className="btn-outline btn-lg" title="Back" onClick={() => router.back()} />
+                        <Btn className="btn-primary btn-lg" onClick={() => handleModalPopup(values)} title="submit" loading={Number(loading)} />
                     </div>
                 </>
                 )}
-                <ModalPassword setModal={setModal} modal={modal} title='Reservation' handleSubmitModalPopup={() => handleSubmitModalPopup(submitForm)} isLoading={loading} />
+                <ModalPassword setModal={setModal} modal={modal} title='User Authentication' handleSubmitModalPopup={() => handleSubmitModalPopup(submitForm)} isLoading={loading} />
             </Form>
             )}
         </Formik>

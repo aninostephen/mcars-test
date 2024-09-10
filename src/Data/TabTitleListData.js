@@ -362,8 +362,8 @@ export const variantStyle = [
 
 export const CarUnitTabTitleListData = [
   { title: "Car Info", icon: <RiCarFill />, inputs: ["car_name", "plate_no", "model_variant", 'car_make_id', "year", "body_type_id", "unit_status", "unit_status", "transmission"] },
-  { title: "On-handling", icon: <RiHandCoinFill />, inputs: ["stability", "on_handling_payment", "contact_name", "contact_no", "driver_user_id"] },
-  { title: "Car Reference", icon: <RiCarWashingFill />, inputs: ["engine_number", "chasis_number", "mvfile_number", "cr_number"] },
+  //{ title: "On-handling", icon: <RiHandCoinFill />, inputs: ["stability", "on_handling_payment", "contact_name", "contact_no", "driver_user_id"] },
+  //{ title: "Car Reference", icon: <RiCarWashingFill />, inputs: ["engine_number", "chasis_number", "mvfile_number", "cr_number"] },
   { title: "Insurrance Information", icon: <RiFileList3Line />, inputs: ["insurance_name"] },
   { title: "Owner", icon: <RiFileUserFill />, inputs: ["old_owner_id"] },
   { title: "Finance Amortization", icon: <RiFileListLine />, inputs: ["due_date", "bank_name", "month_contract", "account_no", "amort_amount"] },

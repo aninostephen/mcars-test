@@ -5,13 +5,14 @@ import I18NextContext from "@/Helper/I18NextContext";
 import { useTranslation } from "@/app/i18n/client";
 import ToggleInput from "@/Components/InputFields/ToggleInput";
 import CheckBoxField from "@/Components/InputFields/CheckBoxField";
+import { MoneyFormat } from "@/Utils/utils";
 
 const StatusInformation = ({ values, setFieldValue, errors, updateId }) => {
   const { i18Lang } = useContext(I18NextContext);
   const { t } = useTranslation(i18Lang, 'common');
   return (
     <>
-      <ToggleInput
+      {/* <ToggleInput
         {...{
           title: t("BackUpUnit"),
           name: "backup_unit",
@@ -26,7 +27,21 @@ const StatusInformation = ({ values, setFieldValue, errors, updateId }) => {
             ],
           },
         }}
-      />
+      /> */}
+
+      <SimpleInputField
+        nameList={
+          [
+            {
+              value: MoneyFormat(values?.downpayment),
+              title: t("Downpayment"),
+              name: "downpayment",
+              require: "false",
+              inputaddon: "true",
+              placeholder: t("Downpayment")
+            },
+          ]
+      } />
 
       <CheckBoxField name="status" />
     </>

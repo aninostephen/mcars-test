@@ -50,7 +50,12 @@ const AmortizationAccount = ({ values, setFieldValue, errors, updateId }) => {
             inputprops: {
               name: "month_contract",
               id: "month_contract",
-              options: generateCountData(100).map((month, idx) => ({ id: idx+1, name: `${month} month`})),
+              options: [
+                { id: "36", name: "36 Month" },
+                { id: "48", name: "48 Month" },
+                { id: "60", name: "60 Month" },
+                { id: "72", name: "72 Month" },
+              ],
             },
           },
         ]}

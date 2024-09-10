@@ -230,20 +230,19 @@ const GeneralTab = ({ values, setFieldValue, bodyType, carMake }) => {
             },
           ]
       } />
-      
+
       <SimpleInputField
-        nameList={
-          [
-            {
-              value: MoneyFormat(values?.downpayment),
-              title: t("Downpayment"),
-              name: "downpayment",
-              require: "true",
-              inputaddon: "true",
-              placeholder: t("Downpayment")
-            },
-          ]
-      } />
+        nameList={[
+          {
+            value: MoneyFormat(values?.on_handling_payment),
+            name: "on_handling_payment",
+            inputaddon: "true",
+            title: t("OnHandlingPayment"),
+            require: "true",
+            placeholder: t("OnHandlingPayment"),
+          },
+        ]}
+      />
 
       <Row className='mb-4 align-items-center g-2'>
           <Col sm="3"><Label className='col-form-label form-label-title form-label'> {t("CarFeatures")}</Label></Col>

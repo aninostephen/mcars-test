@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Form, Formik } from "formik";
 import { Row, Col, Card } from "reactstrap";
 import { CarUnitTabTitleListData } from "../../Data/TabTitleListData";
-import FormBtn from "../../Elements/Buttons/FormBtn";
+// import FormBtn from "../../Elements/Buttons/FormBtn";
 import request from "../../Utils/AxiosUtils";
 import { cu, bt, cm, user } from "../../Utils/AxiosUtils/API";
 import Loader from "../CommonComponent/Loader";
@@ -16,13 +16,17 @@ import TabTitle from "../TabTitle";
 import { YupObject } from "@/Utils/Validation/BodyTypeValidationSchemas";
 import dayjs from "dayjs";
 import { ISOFormat, NumericFormat } from "@/Utils/utils";
+import ModalPassword from "../ModalVerification/ModalPassword";
+import Btn from "@/Elements/Buttons/Btn";
 
 const CarUnitForm = ({ mutate, loading, updateId, title }) => {
+  const [modal, setModal] = useState(false);
   const { i18Lang } = useContext(I18NextContext);
   const { t } = useTranslation(i18Lang, 'common');
   const [activeTab, setActiveTab] = useState("1");
   const { data: oldData, isFetching, refetch } = useQuery([updateId], () => request({ url: `${cu}/${updateId}` }), { refetchOnWindowFocus: false, enabled: false, select: (data) => data.data });
-  
+  const [initialValues, setInitialValues] = useState(InitValues(oldData, updateId));
+
   const { data: bodyType } = useQuery([bt], () => request({
     url: bt,
     params: { status: 1 }
@@ -53,7 +57,17 @@ const CarUnitForm = ({ mutate, loading, updateId, title }) => {
   const watchEvent = useCallback((oldData, updateId) => {
     return InitValues(oldData, updateId)
   }, [oldData, updateId])
+
   if ((updateId && isFetching)) return <Loader />;
+
+  const handleModalPopup = (values) => {
+    setInitialValues({...initialValues, ...values});
+    setModal(true);
+  }
+
+  const handleSubmitModalPopup = (submitForm) => {
+    submitForm();
+  }
 
   return (
     <Formik
@@ -74,7 +88,7 @@ const CarUnitForm = ({ mutate, loading, updateId, title }) => {
 
         SubmitFunction(mutate, values);
       }}>
-      {({ values, setFieldValue, errors, touched }) => (
+      {({ values, setFieldValue, errors, touched, submitForm }) => (
         <Form className="theme-form theme-form-2 mega-form vertical-tabs">
           <Row>
             <Col>
@@ -97,11 +111,16 @@ const CarUnitForm = ({ mutate, loading, updateId, title }) => {
                     carMake={carMake}
                     users={users}
                     />
-                  <FormBtn loading={loading} />
+                  {/* <FormBtn loading={loading} /> */}
+                  <div className="ms-auto justify-content-end dflex-wgap mt-sm-4 mt-2 save-back-button">
+                      <Btn className="btn-outline btn-lg" title="Back" onClick={() => router.back()} />
+                      <Btn className="btn-primary btn-lg" onClick={() => handleModalPopup(values)} title="submit" loading={Number(loading)} />
+                  </div>
                 </Row>
               </Card>
             </Col>
           </Row>
+          <ModalPassword setModal={setModal} modal={modal} title='User Authentication' handleSubmitModalPopup={() => handleSubmitModalPopup(submitForm)} isLoading={loading} />
         </Form>
       )}
     </Formik>
