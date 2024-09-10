@@ -50,7 +50,7 @@ const InsuranceInformation = ({ values, setFieldValue, errors, updateId, touched
                   />
                   {values?.is_registered === 'YES' && (
                     <CalendarField
-                      values={values}
+                      value={values?.till_registered}
                       setFieldValue={setFieldValue}
                       errors={errors}
                       touched={touched}
@@ -89,7 +89,7 @@ const InsuranceInformation = ({ values, setFieldValue, errors, updateId, touched
                   />
                   {values?.is_insured === 'YES' && (
                     <CalendarField
-                      values={values}
+                      value={values?.till_insured}
                       setFieldValue={setFieldValue}
                       errors={errors}
                       touched={touched}
