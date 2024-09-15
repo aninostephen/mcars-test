@@ -10,7 +10,7 @@ import Ledger from "./tabs/Ledger";
 const Amortization = ({ values, setFieldValue, errors, updateId, _, touched }) => {
   const [activeTab, setActiveTab] = useState("1");
   
-  const amortizationTabs = !updateId ? CarMakeAmortizationTab.filter((item) => item.title !== 'Ledger') : CarMakeAmortizationTab;
+  const amortizationTabs = !updateId ? CarMakeAmortizationTab?.filter((item) => item?.title !== 'Ledger') : CarMakeAmortizationTab;
 
   return (
     <>

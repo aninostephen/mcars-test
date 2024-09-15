@@ -11,7 +11,7 @@ const OwnerTab = ({ values, users }) => {
   const { i18Lang } = useContext(I18NextContext);
   const { t } = useTranslation(i18Lang, 'common');
   const selectedOldOwner = values?.old_owner_id
-    ? users.filter((user) => user.id === values?.old_owner_id) 
+    ? users?.filter((user) => user?.id === values?.old_owner_id) 
     : 0;
 
   return (

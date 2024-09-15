@@ -260,7 +260,7 @@ const GeneralTab = ({ values, setFieldValue, bodyType, carMake }) => {
                               </Col>
                               <Col sm="2" className='px-sm-0' style={{marginLeft: "15px"}}>
                                   <a className="mt-custom d-block invalid-feedback cursor-pointer"
-                                      onClick={() => setFieldValue("[car_features]", values['car_features'].filter((item, index) => index !== i),)}>{t('Remove')}</a>
+                                      onClick={() => setFieldValue("[car_features]", values['car_features']?.filter((item, index) => index !== i),)}>{t('Remove')}</a>
                               </Col>
                           </Row>
                       </div>
