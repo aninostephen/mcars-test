@@ -11,7 +11,7 @@ const OwnerTab = ({ values, users }) => {
   const { i18Lang } = useContext(I18NextContext);
   const { t } = useTranslation(i18Lang, 'common');
   const selectedOldOwner = values?.old_owner_id
-    ? users?.filter((user) => user?.id === values?.old_owner_id) 
+    ? users?.filter((user) => user?.id === values?.old_owner_id)[0]
     : 0;
 
   return (
@@ -38,22 +38,22 @@ const OwnerTab = ({ values, users }) => {
                 <Col xs="12">
                     <div className='shipping-accordion-custom'>
                         <div className="p-3 rule-dropdown d-flex justify-content-between">
-                          {selectedOldOwner[0]?.name} <RiArrowDownLine />
+                          {selectedOldOwner?.name} <RiArrowDownLine />
                         </div>
                         <div className="rule-edit-form">
                             <div className="customer-detail tracking-wrapper">
                                 <ul>
                                     <li>
                                         <label>{t("Name")}:</label>
-                                        <h4>{selectedOldOwner[0]?.name}</h4>
+                                        <h4>{selectedOldOwner?.name}</h4>
                                     </li>
                                     <li>
                                         <label>{t("Email")}:</label>
-                                        <h4>{selectedOldOwner[0]?.email}</h4>
+                                        <h4>{selectedOldOwner?.email}</h4>
                                     </li>
                                     <li>
                                         <label>{t("Phone")}:</label>
-                                        <h4>{selectedOldOwner[0]?.phone}</h4>
+                                        <h4>{selectedOldOwner?.phone}</h4>
                                     </li>
                                 </ul>
                             </div>
