@@ -40,7 +40,7 @@ const ShowCard = ({ headerData, moduleName, mutate }) => {
     const handleOnClick = (id) => {
         router.push(`${moduleName.toLowerCase()}/update/${id}`)
     }
-    console.log(data)
+
     return (
         <Grid container>
             {data && data.length > 0 ? data.map((item) => (
