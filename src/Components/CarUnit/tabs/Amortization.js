@@ -29,9 +29,10 @@ const Amortization = ({ values, setFieldValue, errors, updateId, _, touched }) =
               setFieldValue={setFieldValue} 
               errors={errors}
               updateId={updateId}
+              touched={touched}
             />
           </TabPane>
-          <TabPane tabId="2">
+          {/* <TabPane tabId="2">
             <AmortizationPeriod
               values={values}
               setFieldValue={setFieldValue} 
@@ -41,14 +42,14 @@ const Amortization = ({ values, setFieldValue, errors, updateId, _, touched }) =
             />
           </TabPane>
           <TabPane tabId="3">
-            {/* <Ledger
+            <Ledger
               values={values}
               setFieldValue={setFieldValue} 
               errors={errors}
               updateId={updateId}
               touched={touched}
-            /> */}
-          </TabPane>
+            />
+          </TabPane> */}
         </TabContent>
       </div>
     </>

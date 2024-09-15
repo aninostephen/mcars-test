@@ -5,7 +5,7 @@ import I18NextContext from '@/Helper/I18NextContext'
 import SettingContext from '@/Helper/SettingContext'
 import { useTranslation } from '@/app/i18n/client'
 import { Stack } from '@mui/material'
-import { GetRemainingBalance, MoneyFormat } from '@/Utils/utils'
+import { GetRemainingBalance, getTotalMonthPaid, getTotalRemainingAmortization, MoneyFormat } from '@/Utils/utils'
 import ModalVerification from '@/Components/ModalVerification'
 import { nameSchema } from '@/Utils/Validation/ValidationSchemas'
 import SimpleInputField from '@/Components/InputFields/SimpleInputField'
@@ -109,17 +109,27 @@ const UnitAction = ({ data, users }) => {
         setModal(true);
     }
 
+    let remainingMonth = parseInt(data?.month_contract) - data?.amort_month_paid;
+    remainingMonth = remainingMonth >= 0 ? remainingMonth : 0;
+    const notDeletableLedger = data?.amort_month_paid === "0";
+    const totalAmortization = getTotalRemainingAmortization(data?.month_contract, data?.amort_month_paid, data?.amort_amount)
+    const isFullPaidLedger = totalAmortization > 0;
+    console.log(data)
     return (
         <Card>
             <CardBody>
-                <div className="title-header" >
+                <div className="title-header">
                     <div className="d-flex align-items-center">
                         <h5>{("Summary")}</h5>
                     </div>
                     {data?.month_contract !== data?.amort_month_paid && (
                         <Stack direction="row" spacing={2}>
-                            <Link href="#" onClick={(e) => onHandleFullPaid(e)} className="btn btn-animation btn-sm">{t("FullPaidNow")}</Link>
-                            <Link href="#" onClick={(e) => onHandleDeleteLedger(e)} className="btn btn-animation btn-sm btn-outline">{t("DeleteLedger")}</Link>
+                            {isFullPaidLedger && (
+                                <Link href="#" onClick={(e) => onHandleFullPaid(e)} className="btn btn-animation btn-sm">{t("FullPaidNow")}</Link>
+                            )}
+                            {notDeletableLedger && (
+                                <Link href="#" onClick={(e) => onHandleDeleteLedger(e)} className="btn btn-animation btn-sm btn-outline">{t("DeleteLedger")}</Link>
+                            )}
                         </Stack>
                     )}
                 </div>
@@ -127,9 +137,9 @@ const UnitAction = ({ data, users }) => {
                     <ul>
                         <li>{t("AmortAmount")} :<span>{currencySymbol} {MoneyFormat(data?.amort_amount)}</span></li>
                         <li>{t("MonthlyContracts")} :<span>{data?.month_contract}</span></li>
-                        <li>{t("MonthPaid")} :<span>{data?.amort_month_paid}</span></li>
-                        <li>{t("MonthRemaining")}: <span>{data?.amort_month_remaining}</span></li>
-                        <li>{t("RemainingAmount")}: <span>{MoneyFormat(data?.amort_remaining_balance)}</span></li>
+                        <li>{t("MonthPaid")} :<span>{getTotalMonthPaid(data?.month_contract, data?.amort_month_paid)}</span></li>
+                        <li>{t("MonthRemaining")}: <span>{remainingMonth}</span></li>
+                        <li>{t("RemainingAmount")}: <span>{MoneyFormat(totalAmortization)}</span></li>
                     </ul>
                 </div>
             </CardBody>

@@ -14,6 +14,7 @@ import { MoneyFormat } from "@/Utils/utils";
 import Btn from "@/Elements/Buttons/Btn";
 import ModalPrint from "./ModalPrint";
 import TermsInfo from "./TermsInfo";
+import AmortizationInfo from "./AmortizationInfo";
 
 const RemitForm = ({ updateId }) => {
   const { currencySymbol } = useContext(SettingContext);
@@ -106,6 +107,12 @@ const RemitForm = ({ updateId }) => {
           data={oldData}
           onHandleChange={onHandleChange}
         />
+        {(oldData?.data && oldData?.data?.payment_type === 'company_amortization') && (
+          <>
+            <Divider />
+            <AmortizationInfo data={oldData?.data} /> 
+          </>
+        )}
       </div>
       {oldData?.data?.is_remitted !== 'APPROVED' && (
         <ModalVerification

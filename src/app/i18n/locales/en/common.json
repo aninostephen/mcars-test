@@ -1005,5 +1005,7 @@
   "CurrentMileage": "Current mileage",
   "FuelType": "Fuel Type",
   "BodyColor": "Body Color",
-  "StartOn": "Start On"
+  "StartOn": "Start On",
+  "NextDue": "Next Due Date",
+  "DueEveryMonth": "Due Every Month"
 }

@@ -3,7 +3,7 @@ import { Table } from 'reactstrap';
 import I18NextContext from '@/Helper/I18NextContext';
 import { useTranslation } from '@/app/i18n/client';
 import SettingContext from '@/Helper/SettingContext';
-import { MoneyFormat } from '@/Utils/utils';
+import { dateFormat, MoneyFormat } from '@/Utils/utils';
 import { Chip } from '@mui/material';
 import Btn from '@/Elements/Buttons/Btn';
 import ModalVerification from '@/Components/ModalVerification';
@@ -78,7 +78,9 @@ const DetailTable = ({ data, users }) => {
                     {data?.ledger && data?.ledger.map((item, index) => (
                         <tr key={item.id}>
                             <td>
-                                <h6 style={{color: item?.is_amort_due_date === '1' ? 'red': ''}}>{item?.due_date}</h6>
+                                <h6 style={{color: item?.is_amort_due_date === '1' ? 'red': ''}}>
+                                    {dayjs(item?.due_date).format(dateFormat)}
+                                </h6>
                             </td>
                             <td>
                                 <h6>{currencySymbol} {MoneyFormat(item?.amount_paid)}</h6>
@@ -102,6 +104,12 @@ const DetailTable = ({ data, users }) => {
                                             ) : <Chip label="Paid" color="success"></Chip>
                                         }
                                     </>
+                                )}
+                                {(item?.status_amort === 'PAID') && (
+                                    <>PAID</>
+                                )}
+                                {(item?.status_amort === 'PENDING') && (
+                                    <>PENDING APPROVED</>
                                 )}
                             </td>
                         </tr >

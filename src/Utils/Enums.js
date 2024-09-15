@@ -12,6 +12,7 @@ export const REMIT_STATUS = {
 export const REMIT_TRANSACTION = {
   release_station: 'Release Station',
   reservations: 'Reservation',
+  amortization: 'Amortization',
 };
 
 export const REMIT_PAYMENT_TYPE = {
@@ -21,6 +22,7 @@ export const REMIT_PAYMENT_TYPE = {
   reservation_fee: 'Reservation fee',
   already_payment: 'Already in paid',
   full_downpayment: 'Full downpayment',
+  company_amortization: 'Unit Amortization'
 };
 
 export const TRANSMISSION = {

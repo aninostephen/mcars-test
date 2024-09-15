@@ -373,6 +373,6 @@ export const CarUnitTabTitleListData = [
 
 export const CarMakeAmortizationTab = [
   { title: "Account", icon: <RiBankLine /> },
-  { title: "Period", icon: <RiRecordCircleLine />, inputs: ["amort_start_date", "amort_end_date", "month_paid"] },
-  { title: "Ledger", icon: <RiFileListLine /> }
+  // { title: "Period", icon: <RiRecordCircleLine />, inputs: ["amort_start_date", "amort_end_date", "month_paid"] },
+  // { title: "Ledger", icon: <RiFileListLine /> }
 ]

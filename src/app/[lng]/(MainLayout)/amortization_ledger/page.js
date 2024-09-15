@@ -17,6 +17,7 @@ const AmortizationLedgerCreate = () => {
         moduleName="Amortization Ledgers"
         isCheck={isCheck}
         setIsCheck={setIsCheck}
+        onlyTitle={true}
       />
     </Col>
   );

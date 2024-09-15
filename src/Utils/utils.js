@@ -107,3 +107,16 @@ export const paymentStatusColor = (dt) => {
 
   return paymentStatus;
 }
+
+export const getTotalMonthPaid = (monthContract, monthPaid) => {
+  return monthPaid > monthContract ? monthContract : monthPaid;
+}
+
+export const getTotalRemainingAmortization = (month_contract, month_paid, amort_amount) => {
+  const monthContract = parseInt(month_contract);
+  const monthPaid = parseInt(month_paid);
+  const montPaid = getTotalMonthPaid(monthContract, monthPaid);
+  let remainingMonth = monthContract - montPaid;
+  remainingMonth = remainingMonth >= 0 ? remainingMonth : 0;
+  return parseInt(amort_amount) * parseInt(remainingMonth);
+}

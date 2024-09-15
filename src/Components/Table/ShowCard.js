@@ -8,20 +8,50 @@ import {
   RiAccountPinCircleFill,
   RiPhoneFill,
   RiMapPin5Fill,
+  RiDeleteBin2Fill,
 } from "react-icons/ri";
-import { getNextPayableAmortization, MoneyFormat, ordinalSuffix } from '@/Utils/utils';
+import { getNextPayableAmortization, getTotalRemainingAmortization, MoneyFormat, ordinalSuffix } from '@/Utils/utils';
+import DeleteButton from "./DeleteButton";
+import styled from 'styled-components';
 
-const ShowCard = ({ headerData, moduleName }) => {
+const GridStyled = styled(Grid)`
+    position: relative;
+
+    & .item_actions {
+        position: absolute;
+        left: 0px;
+        background: #eee;
+        padding: 14px;
+        top: 11px;
+        font-size: 18px;
+        height: 95%;
+        display: none;
+    }
+
+    &:hover .item_actions {
+        display: block;
+        z-index: 9999;
+    }
+`;
+
+const ShowCard = ({ headerData, moduleName, mutate }) => {
     const { data } = headerData;
     const router = useRouter();
     const handleOnClick = (id) => {
         router.push(`${moduleName.toLowerCase()}/update/${id}`)
     }
+    console.log(data)
     return (
         <Grid container>
             {data && data.length > 0 ? data.map((item) => (
-                <Grid key={item.id} item xs={12}>
-                    <Card sx={{
+                <GridStyled key={item.id} item xs={12}>
+                    <div className='item_actions'>
+                        <Stack direction="column" spacing={2}>
+                            {/* <RiDeleteBin2Fill style={{cursor: 'pointer'}}/> */}
+                            <DeleteButton mutate={mutate} id={item.id}/>
+                        </Stack>
+                    </div>
+                    <Card className='item_container' sx={{
                             display: 'flex',
                             background: '#f9f9f9',
                             margin: '10px',
@@ -114,9 +144,9 @@ const ShowCard = ({ headerData, moduleName }) => {
                                                     <TableBody>
                                                         <TableRow>
                                                             <TableCell>{item?.month_contract} month</TableCell>
-                                                            <TableCell>{item?.month_paid} month</TableCell>
+                                                            <TableCell>{item?.month_paid ? item?.month_paid : 0} month</TableCell>
                                                             <TableCell>{item?.amort_month_remaining ? item?.amort_month_remaining : '--'}</TableCell>
-                                                            <TableCell>{item?.amort_remaining_balance ? MoneyFormat(item?.amort_remaining_balance) : '--'}</TableCell>
+                                                            <TableCell>{item?.amort_remaining_balance ? MoneyFormat(getTotalRemainingAmortization(item?.month_contract, item?.amort_month_paid, item?.amort_amount)) : '--'}</TableCell>
                                                         </TableRow>
                                                     </TableBody>
                                                 </Table>
@@ -127,7 +157,7 @@ const ShowCard = ({ headerData, moduleName }) => {
                             </CardContent>
                         </Box>
                     </Card>
-                </Grid>
+                </GridStyled>
             )) : 'No data'}
         </Grid>
     );

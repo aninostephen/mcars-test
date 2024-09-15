@@ -29,8 +29,8 @@ export const ValidationSchema = {
   month_contract: nameSchema,
   account_no: nameSchema,
   amort_amount: nameSchema,
-  amort_start_date: nameSchema,
-  amort_end_date: nameSchema,
+  // amort_start_date: nameSchema,
+  // amort_end_date: nameSchema,
   //month_paid: nameSchema,
   due_date: nameSchema,
   //downpayment: nameSchema,
@@ -38,6 +38,7 @@ export const ValidationSchema = {
   fuel_type: nameSchema,
   body_color: nameSchema,
   start_on: nameSchema,
+  next_due: nameSchema,
   //authentication
   password: nameSchema,
 };
@@ -73,6 +74,7 @@ export function InitValues(oldData, updateId) {
     new_owner_id: updateId ? oldData?.new_owner_id || '' : '',
     backup_unit: updateId ? oldData?.backup_unit || 'NO' : 'NO',
     due_date: updateId ? parseInt(oldData?.due_date) || '' : '',
+    next_due: updateId ? oldData?.next_due || dayjs() : dayjs(),
     month_paid: updateId ? parseInt(oldData?.month_paid) || '' : '',
     amort_amount: updateId ? oldData?.amort_amount || '' : '',
     bank_name: updateId ? oldData?.bank_name || '' : '',
@@ -91,8 +93,8 @@ export function InitValues(oldData, updateId) {
     mvfile_number: updateId ? oldData?.mvfile_number || '' : '',
     cr_number: updateId ? oldData?.cr_number || '' : '',
 
-    amort_start_date: updateId ? oldData?.amort_start_date || dayjs() : dayjs(),
-    amort_end_date: updateId ? oldData?.amort_end_date || dayjs() : dayjs(),
+    // amort_start_date: updateId ? oldData?.amort_start_date || dayjs() : dayjs(),
+    // amort_end_date: updateId ? oldData?.amort_end_date || dayjs() : dayjs(),
     downpayment: updateId ? oldData?.downpayment || '' : '',
   };
 }

@@ -82,6 +82,7 @@ const CarUnitForm = ({ mutate, loading, updateId, title }) => {
         }
         values.amort_start_date = dayjs(values.amort_start_date).format(ISOFormat);
         values.amort_end_date = dayjs(values.amort_end_date).format(ISOFormat);
+        values.next_due = dayjs(values.next_due).format(ISOFormat);
         values.downpayment = NumericFormat(values?.downpayment);
         values.on_handling_payment = NumericFormat(values?.on_handling_payment);
         values.amort_amount = NumericFormat(values?.amort_amount);
