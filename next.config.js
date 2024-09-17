@@ -4,7 +4,7 @@ const nextConfig = {
   swcMinify: true,
   env: {
     // For Local Server
-	API_PROD_URL: "https://api.mcars.ph/api/",
+	API_PROD_URL: "https://administrator.mcars.ph/api/",
     //API_PROD_URL: "http://localhost:8000/api/",
   },
   redirects: async () => {
@@ -21,13 +21,13 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "api.mcars.ph",
+        hostname: "administrator.mcars.ph",
         port: "8000",
         pathname: '/storage/**'
       },
       {
         protocol: "https",
-        hostname: "api.mcars.ph",
+        hostname: "administrator.mcars.ph",
         port: "8000",
         pathname: '/frontend/**'
       },
@@ -39,11 +39,11 @@ const nextConfig = {
       // },
       {
         protocol: "https",
-        hostname: "api.mcars.ph",
+        hostname: "administrator.mcars.ph",
       },
       {
         protocol: "https",
-        hostname: "api.mcars.ph",
+        hostname: "administrator.mcars.ph",
       },
     ],
     // remotePatterns: [
