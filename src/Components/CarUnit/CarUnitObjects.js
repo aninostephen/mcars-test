@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
 import { descriptionSchema, nameSchema, } from "./ValidationSchemas";
+import * as Yup from "yup";
 
 export const ValidationSchema = {
   car_name: nameSchema,
@@ -11,36 +12,45 @@ export const ValidationSchema = {
   unit_status: nameSchema,
   transactions: nameSchema,
   transmission: nameSchema,
-  //stability: nameSchema,
   on_handling_payment: nameSchema,
-  //pickup_date_target: nameSchema,
-  //driver_user_id: nameSchema,
-  //backup_user_id: nameSchema,
-  //pickup_destination: nameSchema,
-  //remarks: descriptionSchema,
-  //engine_number: nameSchema,
-  //chasis_number: nameSchema,
-  //mvfile_number: nameSchema,
-  //cr_number: nameSchema,
   insurance_name: nameSchema,
   is_registered: nameSchema,
-  old_owner_id: nameSchema,
   bank_name: nameSchema,
   month_contract: nameSchema,
   account_no: nameSchema,
   amort_amount: nameSchema,
-  // amort_start_date: nameSchema,
-  // amort_end_date: nameSchema,
-  //month_paid: nameSchema,
   due_date: nameSchema,
-  //downpayment: nameSchema,
   current_mileage: nameSchema,
   fuel_type: nameSchema,
   body_color: nameSchema,
   start_on: nameSchema,
   next_due: nameSchema,
-  //authentication
   password: nameSchema,
+  name: Yup.string()
+    .when("is_exist_client", {
+        is: (val) => val === 'ac',
+        then: Yup.string().required('Field is required'),
+        otherwise: Yup.string(),
+    }),
+  email: Yup.string()
+    .when("is_exist_client", {
+        is: (val) => val === 'ac',
+        then: Yup.string().required('Field is required'),
+        otherwise: Yup.string(),
+    }),
+  phone: Yup.string()
+    .when("is_exist_client", {
+        is: (val) => val === 'ac',
+        then: Yup.string().required('Field is required'),
+        otherwise: Yup.string(),
+    }),
+  
+  old_owner_id: Yup.string()
+    .when("is_exist_client", {
+        is: (val) => val === 'sc',
+        then: Yup.string().required('Field is required'),
+        otherwise: Yup.string(),
+    }),
 };
 
 export function InitValues(oldData, updateId) {
@@ -96,5 +106,6 @@ export function InitValues(oldData, updateId) {
     // amort_start_date: updateId ? oldData?.amort_start_date || dayjs() : dayjs(),
     // amort_end_date: updateId ? oldData?.amort_end_date || dayjs() : dayjs(),
     downpayment: updateId ? oldData?.downpayment || '' : '',
+    is_exist_client: 'sc',
   };
 }

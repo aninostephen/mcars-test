@@ -2,6 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 
 const Avatar = ({ data, placeHolder, name, customeClass, height, width, noPrevClass }) => {
+    console.log(height)
     return (
         <>
             {

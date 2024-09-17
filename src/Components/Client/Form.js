@@ -12,7 +12,7 @@ import UserPassword from "./UserPassword";
 import ClientInfo from "./ClientInfo";
 import { NumericFormat } from "@/Utils/utils";
 
-const ClientForm = ({ mutate, loading, updateId, fixedRole,noRoleField, addAddress, type }) => {
+const ClientForm = ({ mutate, loading, updateId, fixedRole, noRoleField, addAddress, type }) => {
 
   const { data: oldData, isFetching: isFetchingUser, refetch } = useQuery([updateId], () => request({ url: `/user/${updateId}` }), { enabled: false, refetchOnWindowFocus:false });
   useEffect(() => {

@@ -64,11 +64,15 @@ const ShowCard = ({ headerData, moduleName, mutate }) => {
                         onClick={() => handleOnClick(item.id)}
                     >
                         {item?.car_thumbnail?.original_url  ? (
-                            <CardMedia
-                                component="img"
-                                sx={{ width: 151 }}
-                                image={`${item?.car_thumbnail?.original_url}`}
-                                alt="Live from space album cover"
+                            <Image
+                                className="img-fluid logo-sm w-auto"
+                                src={item?.car_thumbnail?.original_url}
+                                alt="Images"
+                                width={150}
+                                height={0}
+                                style={{
+                                    height: '150px',
+                                }}
                             />
                         ) : <Image src={placeHolderImage} width="151" />}
                         

@@ -9,6 +9,7 @@ import { useTranslation } from "@/app/i18n/client";
 const FileUploadBrowser = ({ values, setFieldValue, dispatch, ...props }) => {
     const { i18Lang } = useContext(I18NextContext);
     const { t } = useTranslation(i18Lang, "common");
+    const maxFile = 25;
     useEffect(() => {
         dispatch && dispatch({ type: "SETBROWSERIMAGE", payload: values })
     }, [values])
@@ -76,8 +77,8 @@ const FileUploadBrowser = ({ values, setFieldValue, dispatch, ...props }) => {
         ) : null;
     }
     const onSelect = (event) => {
-        if (event.currentTarget.files.length > 5) {
-            return ToastNotification('error', `You've reached 5 file maximum.`)
+        if (event.currentTarget.files.length > maxFile) {
+            return ToastNotification('error', `You've reached ${maxFile} file maximum.`)
         } else {
             setFieldValue(props.name, props.multiple ? addFileFromFileList(event.currentTarget.files) : event.currentTarget.files[0], props.index);
         }

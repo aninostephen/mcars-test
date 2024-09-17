@@ -3,7 +3,7 @@ import { useTranslation } from "@/app/i18n/client";
 import { useContext, useEffect, useState } from "react";
 import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 
-const ShowModal = ({ open = false, buttons, title, close = true, modalAttr, setModal, maxWidth='500px', ...props }) => {
+const ShowModal = ({ open = false, buttons, title, close = true, modalAttr, setModal, maxWidth='auto', ...props }) => {
   const [isOpen, setIsOpen] = useState(open);
   const { i18Lang } = useContext(I18NextContext);
   const { t } = useTranslation(i18Lang, 'common');

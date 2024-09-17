@@ -6,8 +6,7 @@ import SearchableSelectInput from "@/Components/InputFields/SearchableSelectInpu
 import { dateFormat, generateCountData, generateMonthlySchedule, MoneyFormat, NumericFormat } from "@/Utils/utils";
 import CalendarField from "../../components/CalendarField";
 import dayjs from "dayjs";
-import { Alert } from "reactstrap";
-import { Stack } from "@mui/material";
+import { Stack, Alert } from "@mui/material";
 
 const AmortizationAccount = ({ values, setFieldValue, errors, updateId, touched }) => {
   const { i18Lang } = useContext(I18NextContext);
@@ -44,14 +43,16 @@ const AmortizationAccount = ({ values, setFieldValue, errors, updateId, touched 
 
   return (
     <>
-      <Alert color="warning">
-        <Stack direction="column" spacing={1.5}>
-          <div><b>Next DueDate:</b> {dayjs(nextDue).format(dateFormat)}</div>
-          <div><b>End date:</b> {dayjs(endDate).format(dateFormat)}</div>
-          {amortizationAmount && (<div><b>Monthly Amortization:</b> {amortizationAmount}</div>)}
-          {totalAmortization && (<div><b>Total Amortization:</b> {totalAmortization}</div>)}
-        </Stack>
-      </Alert>
+      <div style={{marginBottom: 20, marginLeft: '0px !important'}}>
+        <Alert severity="info">
+          <Stack direction="column" spacing={1.5}>
+            <div><b>Next DueDate:</b> {dayjs(nextDue).format(dateFormat)}</div>
+            <div><b>End date:</b> {dayjs(endDate).format(dateFormat)}</div>
+            {amortizationAmount && (<div><b>Monthly Amortization:</b> {amortizationAmount}</div>)}
+            {totalAmortization && (<div><b>Total Amortization:</b> {totalAmortization}</div>)}
+          </Stack>
+        </Alert>
+      </div>
       <SearchableSelectInput
         nameList={[
           {

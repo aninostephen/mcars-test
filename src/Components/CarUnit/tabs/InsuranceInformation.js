@@ -56,6 +56,7 @@ const InsuranceInformation = ({ values, setFieldValue, errors, updateId, touched
                       touched={touched}
                       label="Till"
                       name="till_registered"
+                      type="input"
                     />
                   )}
                 </Stack>
@@ -95,6 +96,7 @@ const InsuranceInformation = ({ values, setFieldValue, errors, updateId, touched
                       touched={touched}
                       label="Till"
                       name="till_insured"
+                      type="input"
                     />
                   )}
                 </Stack>

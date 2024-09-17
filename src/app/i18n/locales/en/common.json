@@ -986,7 +986,7 @@
   "TargetDate": "Target Date",
   "InquireFrom": "From",
   "HaveFee": "Have Fee",
-  "MonthPaid": "Month Paid",
+  "MonthPaid": "Months Remaining",
   "AmountPaid": "Amount Paid",
   "Reciept": "Reciept",
   "PaidBy": "Paid By",
@@ -1007,5 +1007,6 @@
   "BodyColor": "Body Color",
   "StartOn": "Start On",
   "NextDue": "Next Due Date",
-  "DueEveryMonth": "Due Every Month"
+  "DueEveryMonth": "Due Every Month",
+  "ClientExist": "Client Exist?"
 }
