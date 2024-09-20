@@ -88,11 +88,10 @@ const ShowCard = ({ headerData, moduleName, mutate, fetchStatus }) => {
         const zip = new JSZip();
         const folder = zip.folder("images");
 
-        // Loop through each image URL and add it to the zip
         const promises = images.map(async (img, index) => {
             if (index < 10) {
                 try {
-                  const response = await fetch(img?.original_url, { mode: 'no-cors' });
+                  const response = await fetch(img?.original_url);
                   if (!response.ok) {
                     throw new Error(`Failed to fetch image: ${img?.original_url}`);
                   }

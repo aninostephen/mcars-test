@@ -34,7 +34,6 @@ const CarUnit = ({ data, onHandleFilter, ...props }) => {
   if (!data) return null;
   return <>
     <TableFilter filter={filter} onHandleFilter={onHandleFilter} />
-    {/* <ShowTable {...props} headerData={headerObj} moduleName="car_unit" /> */}
     <ShowCard {...props} headerData={headerObj} moduleName="car_unit"/>
   </>
 };

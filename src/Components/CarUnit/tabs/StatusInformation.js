@@ -39,6 +39,7 @@ const StatusInformation = ({ values, setFieldValue, errors, updateId }) => {
               name: "fe_section",
               id: "fe_section",
               options: [
+                { id: "", name: "Unset" },
                 { id: "LATEST_UNIT", name: "Latest Unit" },
                 { id: "TOP_SELLING", name: "Top Selling Unit" },
               ],
