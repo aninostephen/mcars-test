@@ -88,6 +88,9 @@ const ShowCard = ({ headerData, moduleName, mutate, fetchStatus }) => {
         const zip = new JSZip();
         const folder = zip.folder("images");
 
+        setClipCopiedOpen(true);
+        setPopupTitle("Images Downloading");
+
         const promises = images.map(async (img, index) => {
             if (index < 10) {
                 try {
@@ -107,8 +110,6 @@ const ShowCard = ({ headerData, moduleName, mutate, fetchStatus }) => {
         zip.generateAsync({ type: "blob" }).then((content) => {
             saveAs(content, "images.zip");
         });
-        setClipCopiedOpen(true);
-        setPopupTitle("Images Downloading");
     };
 
     if (fetchStatus === 'fetching') return <Loader />;
