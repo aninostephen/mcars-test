@@ -6,6 +6,7 @@ import { useTranslation } from "@/app/i18n/client";
 import ToggleInput from "@/Components/InputFields/ToggleInput";
 import CheckBoxField from "@/Components/InputFields/CheckBoxField";
 import { MoneyFormat } from "@/Utils/utils";
+import SearchableSelectInput from "@/Components/InputFields/SearchableSelectInput";
 
 const StatusInformation = ({ values, setFieldValue, errors, updateId }) => {
   const { i18Lang } = useContext(I18NextContext);
@@ -28,6 +29,23 @@ const StatusInformation = ({ values, setFieldValue, errors, updateId }) => {
           },
         }}
       /> */}
+
+      <SearchableSelectInput
+        nameList={[
+          {
+            title: t("FESections"),
+            name: "fe_section",
+            inputprops: {
+              name: "fe_section",
+              id: "fe_section",
+              options: [
+                { id: "LATEST_UNIT", name: "Latest Unit" },
+                { id: "TOP_SELLING", name: "Top Selling Unit" },
+              ],
+            },
+          },
+        ]}
+      />
 
       <SimpleInputField
         nameList={

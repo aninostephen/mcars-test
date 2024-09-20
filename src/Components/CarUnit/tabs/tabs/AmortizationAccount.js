@@ -13,8 +13,8 @@ const AmortizationAccount = ({ values, setFieldValue, errors, updateId, touched 
   const { t } = useTranslation(i18Lang, 'common');
 
   const today = dayjs();
-  let nextDue;
-  let endDate;
+  let nextDue = today;
+  let endDate = today;
   let totalMonth = 0;
   let amortizationAmount = '';
   let totalAmortization = '';
@@ -99,10 +99,10 @@ const AmortizationAccount = ({ values, setFieldValue, errors, updateId, touched 
               name: "month_contract",
               id: "month_contract",
               options: [
-                { id: "36", name: "36 Month" },
-                { id: "48", name: "48 Month" },
-                { id: "60", name: "60 Month" },
-                { id: "72", name: "72 Month" },
+                { id: 36, name: "36 Month" },
+                { id: 48, name: "48 Month" },
+                { id: 60, name: "60 Month" },
+                { id: 72, name: "72 Month" },
               ],
             },
           },

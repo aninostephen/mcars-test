@@ -106,6 +106,7 @@ export function InitValues(oldData, updateId) {
     // amort_start_date: updateId ? oldData?.amort_start_date || dayjs() : dayjs(),
     // amort_end_date: updateId ? oldData?.amort_end_date || dayjs() : dayjs(),
     downpayment: updateId ? oldData?.downpayment || '' : '',
+    fe_section: updateId ? oldData?.fe_section || '' : '',
     is_exist_client: 'sc',
   };
 }

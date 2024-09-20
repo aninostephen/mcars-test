@@ -1,5 +1,5 @@
-import { Box, Card, CardContent, CardMedia, Chip, Divider, Grid, IconButton, Stack, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material';
-import React from 'react';
+import { Box, Card, CardContent, CardMedia, Chip, Divider, Grid, IconButton, Snackbar, Stack, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material';
+import React, { useContext, useState } from 'react';
 import { useRouter } from "next/navigation";
 import placeHolderImage from "../../../public/assets/images/placeholder.png";
 import Image from 'next/image';
@@ -9,10 +9,16 @@ import {
   RiPhoneFill,
   RiMapPin5Fill,
   RiDeleteBin2Fill,
+  RiFileCopyFill,
+  RiDownloadCloudLine,
 } from "react-icons/ri";
 import { getNextPayableAmortization, getTotalRemainingAmortization, MoneyFormat, ordinalSuffix } from '@/Utils/utils';
 import DeleteButton from "./DeleteButton";
 import styled from 'styled-components';
+import Loader from '../CommonComponent/Loader';
+import JSZip from 'jszip';
+import { saveAs } from 'file-saver';
+import AccountContext from '@/Helper/AccountContext';
 
 const GridStyled = styled(Grid)`
     position: relative;
@@ -34,13 +40,79 @@ const GridStyled = styled(Grid)`
     }
 `;
 
-const ShowCard = ({ headerData, moduleName, mutate }) => {
+const ShowCard = ({ headerData, moduleName, mutate, fetchStatus }) => {
+    const { accountData } = useContext(AccountContext)
     const { data } = headerData;
     const router = useRouter();
+    const [clipCopiedOpen, setClipCopiedOpen] = useState(false);
+    const [popupTitle, setPopupTitle] = useState("");
     const handleOnClick = (id) => {
         router.push(`${moduleName.toLowerCase()}/update/${id}`)
     }
+    const copyToClipboard = (item) => {
+        const listText = `
+            Maker/Model Year : ${item?.car_make_name} - ${item?.year}
+            Transmission : ${item?.transmission}
+            Color : ${item?.body_color}
+            Milleage: ${MoneyFormat(item?.current_mileage)}
+            Fuel type: ${item?.fuel_type}
+            Body type : ${item?.body_type_name}
 
+            Downpayment : ${item?.downpayment ? MoneyFormat(item?.downpayment) : 0}
+            Montly Amortization : ${MoneyFormat(item?.amort_amount)}
+            Months Remaining : ${item?.month_paid}
+            Due : Every ${ordinalSuffix(item?.due_date)} Month
+
+            Admin Name: ${accountData.name}
+            Phone Number: ${accountData.phone}
+        `;
+        navigator.clipboard.writeText(listText).then(
+            () => {
+                setClipCopiedOpen(true);
+                setPopupTitle("Copy unit details");
+            },
+            (err) => {
+                console.error('Failed to copy: ', err);
+            }
+        );
+    };
+
+    const handleCloseCopied = () => {
+        setClipCopiedOpen(false);
+    }
+
+    const downloadImageAsZip = async (images) => {
+
+        if (!images || images.length === 0) return false;
+
+        const zip = new JSZip();
+        const folder = zip.folder("images");
+
+        // Loop through each image URL and add it to the zip
+        const promises = images.map(async (img, index) => {
+            if (index < 10) {
+                try {
+                  const response = await fetch(img?.original_url, { mode: 'no-cors' });
+                  if (!response.ok) {
+                    throw new Error(`Failed to fetch image: ${img?.original_url}`);
+                  }
+                  const blob = await response.blob();
+                  folder.file(`image${index + 1}.jpg`, blob);
+                } catch (error) {
+                  console.error(error);
+                }
+            }
+        });
+  
+        await Promise.all(promises);
+        zip.generateAsync({ type: "blob" }).then((content) => {
+            saveAs(content, "images.zip");
+        });
+        setClipCopiedOpen(true);
+        setPopupTitle("Images Downloading");
+    };
+
+    if (fetchStatus === 'fetching') return <Loader />;
     return (
         <Grid container>
             {data && data.length > 0 ? data.map((item) => (
@@ -49,6 +121,8 @@ const ShowCard = ({ headerData, moduleName, mutate }) => {
                         <Stack direction="column" spacing={2}>
                             {/* <RiDeleteBin2Fill style={{cursor: 'pointer'}}/> */}
                             <DeleteButton mutate={mutate} id={item.id}/>
+                            <RiFileCopyFill title="Copy details" style={{cursor: 'pointer'}} onClick={() => copyToClipboard(item)} />
+                            <RiDownloadCloudLine title="Download images" style={{cursor: 'pointer'}} onClick={() => downloadImageAsZip(item?.car_unit_galleries)} />
                         </Stack>
                     </div>
                     <Card className='item_container' sx={{
@@ -81,7 +155,7 @@ const ShowCard = ({ headerData, moduleName, mutate }) => {
                                <Stack spacing={1} direction='column'>
                                     <Stack direction="row" spacing={1} justifyContent="space-between">
                                         <Typography component="div" variant="h6">
-                                            {item?.car_name}
+                                            {item?.plate_no} - {item?.car_name}
                                         </Typography>
                                          <Stack direction='row' spacing={1}>
                                             <Chip label={item?.status ? 'Listed': 'Not Listed'} color={item?.status ? 'primary': 'warning'} />
@@ -141,6 +215,7 @@ const ShowCard = ({ headerData, moduleName, mutate }) => {
                                                         <TableRow>
                                                             <TableCell>Terms</TableCell>
                                                             <TableCell>Paid</TableCell>
+                                                            <TableCell>Payables</TableCell>
                                                             <TableCell>Remaining</TableCell>
                                                             <TableCell>Balance</TableCell>
                                                         </TableRow>
@@ -148,8 +223,9 @@ const ShowCard = ({ headerData, moduleName, mutate }) => {
                                                     <TableBody>
                                                         <TableRow>
                                                             <TableCell>{item?.month_contract} month</TableCell>
-                                                            <TableCell>{item?.month_paid ? item?.month_paid : 0} month</TableCell>
-                                                            <TableCell>{item?.amort_month_remaining ? item?.amort_month_remaining : '--'}</TableCell>
+                                                            <TableCell>{item?.amort_month_paid ? item?.amort_month_paid : 0} month</TableCell>
+                                                            <TableCell>{item?.amort_month_remaining ? item?.amort_month_remaining - 1 : '--'}</TableCell>
+                                                            <TableCell>{item?.month_paid ? item?.month_paid : '--'}</TableCell>
                                                             <TableCell>{item?.amort_remaining_balance ? MoneyFormat(getTotalRemainingAmortization(item?.month_contract, item?.amort_month_paid, item?.amort_amount)) : '--'}</TableCell>
                                                         </TableRow>
                                                     </TableBody>
@@ -163,6 +239,14 @@ const ShowCard = ({ headerData, moduleName, mutate }) => {
                     </Card>
                 </GridStyled>
             )) : 'No data'}
+            <Snackbar
+                anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                open={clipCopiedOpen}
+                onClose={handleCloseCopied}
+                message={popupTitle}
+                key={"topcenter"}
+                autoHideDuration={3000}
+            />
         </Grid>
     );
 };

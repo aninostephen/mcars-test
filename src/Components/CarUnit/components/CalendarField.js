@@ -19,7 +19,6 @@ const CalendarField = ({ value, setFieldValue, label, name, errors, touched, typ
                 <>
                   {type === 'popup' && (
                     <MobileDatePicker
-                      disablePast
                       name={name}
                       value={dayjs(value)}
                       onChange={(val) => setFieldValue(name, val)}
@@ -34,7 +33,6 @@ const CalendarField = ({ value, setFieldValue, label, name, errors, touched, typ
                   )}
                   {type === 'input' && (
                     <DateField
-                      // disablePast
                       name={name}
                       value={dayjs(value)}
                       onChange={(val) => setFieldValue(name, val)}

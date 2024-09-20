@@ -1008,5 +1008,6 @@
   "StartOn": "Start On",
   "NextDue": "Next Due Date",
   "DueEveryMonth": "Due Every Month",
-  "ClientExist": "Client Exist?"
+  "ClientExist": "Client Exist?",
+  "FESections": "FE Section"
 }
