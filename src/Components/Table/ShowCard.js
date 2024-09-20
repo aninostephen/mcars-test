@@ -93,7 +93,7 @@ const ShowCard = ({ headerData, moduleName, mutate, fetchStatus }) => {
                 try {
                   const response = await fetch(img?.original_url);
                   if (!response.ok) {
-                    throw new Error(`Failed to fetch image: ${img?.original_url}`);
+                    throw new Error(`Failed to fetch image: ${img?.original_url}`, { mode: 'no-cors' });
                   }
                   const blob = await response.blob();
                   folder.file(`image${index + 1}.jpg`, blob);
