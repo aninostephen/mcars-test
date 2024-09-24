@@ -51,20 +51,18 @@ const ShowCard = ({ headerData, moduleName, mutate, fetchStatus }) => {
     }
     const copyToClipboard = (item) => {
         const listText = `
-            Maker/Model Year : ${item?.car_make_name} - ${item?.year}
-            Transmission : ${item?.transmission}
-            Color : ${item?.body_color}
-            Milleage: ${MoneyFormat(item?.current_mileage)}
-            Fuel type: ${item?.fuel_type}
-            Body type : ${item?.body_type_name}
+${item?.car_make?.car_make_name} - ${item?.year}
+${item?.transmission}
+${item?.body_color}
+${item?.fuel_type}
 
-            Downpayment : ${item?.downpayment ? MoneyFormat(item?.downpayment) : 0}
-            Montly Amortization : ${MoneyFormat(item?.amort_amount)}
-            Months Remaining : ${item?.month_paid}
-            Due : Every ${ordinalSuffix(item?.due_date)} Month
+DP: ${item?.downpayment ? MoneyFormat(item?.downpayment) : 0}
+Montly: ${MoneyFormat(item?.amort_amount)}
+${item?.month_paid} Months Remaining
+Every ${ordinalSuffix(item?.due_date)} Month
 
-            Admin Name: ${accountData.name}
-            Phone Number: ${accountData.phone}
+Sales ${accountData.name}
+Phone #: ${accountData.phone}
         `;
         navigator.clipboard.writeText(listText).then(
             () => {
@@ -94,7 +92,7 @@ const ShowCard = ({ headerData, moduleName, mutate, fetchStatus }) => {
         const promises = images.map(async (img, index) => {
             if (index < 10) {
                 try {
-                  const response = await fetch(img?.original_url);
+                  const response = await fetch(img?.original_url, { mode: 'no-cors' });
                   if (!response.ok) {
                     throw new Error(`Failed to fetch image: ${img?.original_url}`);
                   }
