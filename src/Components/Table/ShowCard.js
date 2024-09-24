@@ -92,7 +92,7 @@ Phone #: ${accountData.phone}
         const promises = images.map(async (img, index) => {
             if (index < 10) {
                 try {
-                  const response = await fetch(img?.original_url, { mode: 'no-cors' });
+                  const response = await fetch(img?.original_url);
                   if (!response.ok) {
                     throw new Error(`Failed to fetch image: ${img?.original_url}`);
                   }
