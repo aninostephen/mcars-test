@@ -51,7 +51,7 @@ const ShowCard = ({ headerData, moduleName, mutate, fetchStatus }) => {
     }
     const copyToClipboard = (item) => {
         const listText = `
-${item?.car_make?.car_make_name} - ${item?.year}
+${item?.car_make?.car_make_name} ${item?.model_variant} - ${item?.year}
 ${item?.transmission}
 ${item?.body_color}
 ${item?.fuel_type}
