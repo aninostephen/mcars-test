@@ -36,7 +36,7 @@ const GridStyled = styled(Grid)`
 
     &:hover .item_actions {
         display: block;
-        z-index: 9999;
+        z-index: 1;
     }
 `;
 
