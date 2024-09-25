@@ -62,6 +62,18 @@ export const ThemeOptionInitialValue = (NewSettingsData) => {
         footer_categories: NewSettingsData?.footer?.footer_categories ? NewSettingsData?.footer?.footer_categories : [],
         useful_link: NewSettingsData?.footer?.useful_link ? NewSettingsData?.footer?.useful_link : [],
         footer_pages: NewSettingsData?.footer?.footer_pages ? NewSettingsData?.footer?.footer_pages : [],
-        today_deals: NewSettingsData?.header?.today_deals ? NewSettingsData?.header?.today_deals : []
+        today_deals: NewSettingsData?.header?.today_deals ? NewSettingsData?.header?.today_deals : [],
+
+        //Homepage
+        banner_home: NewSettingsData?.homepage?.banner_home ? NewSettingsData?.homepage?.banner_home : [],
+        titlesec3: NewSettingsData?.homepage?.titlesec3 ? NewSettingsData?.homepage?.titlesec3 : [],
+        tagline: NewSettingsData?.homepage?.tagline ? NewSettingsData?.homepage?.tagline : [],
+        tagline2: NewSettingsData?.homepage?.tagline2 ? NewSettingsData?.homepage?.tagline2 : [],
+        video: NewSettingsData?.homepage?.video ? NewSettingsData?.homepage?.video : [],
+        title_req: NewSettingsData?.homepage?.title_req ? NewSettingsData?.homepage?.title_req : [],
+        tagline_req: NewSettingsData?.homepage?.tagline_req ? NewSettingsData?.homepage?.tagline_req : [],
+        require_img: NewSettingsData?.homepage?.require_img ? NewSettingsData?.homepage?.require_img : "",
+        require_img2: NewSettingsData?.homepage?.require_img2 ? NewSettingsData?.homepage?.require_img2 : "",
+        bottom_banner: NewSettingsData?.homepage?.bottom_banner ? NewSettingsData?.homepage?.bottom_banner : "",
     }
 }

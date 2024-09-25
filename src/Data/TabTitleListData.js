@@ -39,6 +39,7 @@ import {
   RiCarWashingFill,
   RiHandCoinFill,
   RiFileImageFill,
+  RiHome2Fill,
 } from "react-icons/ri";
 import { TbTruckDelivery } from 'react-icons/tb'
 import basicSeller from '../../public/assets/images/theme-option/seller/basic.png'
@@ -102,6 +103,7 @@ export const SettingTabTitleListData = [
 
 export const ThemeOptionTabTitleListData = [
   { title: "General", icon: <RiSettingsLine /> },
+  { title: "Homepage", icon: <RiHome2Fill /> },
   { title: "Header", icon: <RiLayoutTop2Line /> },
   { title: "Footer", icon: <RiLayoutBottom2Line /> },
   { title: "CollectionLayout", icon: <RiShoppingBasketLine /> },
@@ -139,7 +141,7 @@ export const HeaderOption = [
 
 export const FooterUseFulLink = [
   { value: 'home', name: 'Home' },
-  { value: 'collections', name: 'Collections' },
+  { value: 'collections', name: 'Showroom' },
   { value: 'about-us', name: 'About Us' },
   { value: 'blogs', name: 'Blogs' },
   { value: 'offer', name: 'Offer' },

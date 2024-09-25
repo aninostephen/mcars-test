@@ -1,6 +1,5 @@
 
 const ThemeOptionSubmit = (values, mutate) => {
-
     if (values["header_logo_id"]) {
         values['options']['logo']["header_logo_id"] = values["header_logo_id"]
     }
@@ -105,6 +104,125 @@ const ThemeOptionSubmit = (values, mutate) => {
             values['options']['about_us']['testimonial']['reviews'][i]['profile_image_url'] = values[`testimonialReviewImage${i}`].original_url
         } else { values['options']['about_us']['testimonial']['reviews'][i]['profile_image_url'] = '' }
     })
+
+    if (values['banner_home']) {
+        const data = {
+            homepage: {
+                banner_home: values['banner_home']
+            }
+        }
+        values['options'] = { ...values['options'], ...data };
+    } else {
+        values['options']['homepage']["banner_home"] = '';
+    }
+
+    if (values['titlesec3']) {
+        const data = {
+            homepage: {
+                ...values['options']['homepage'],
+                titlesec3: values['titlesec3']
+            }
+        }
+        values['options'] = { ...values['options'], ...data };
+    } else {
+        values['options']['homepage']["titlesec3"] = '';
+    }
+
+    if (values['tagline']) {
+        const data = {
+            homepage: {
+                ...values['options']['homepage'],
+                tagline: values['tagline']
+            }
+        }
+        values['options'] = { ...values['options'], ...data };
+    } else {
+        values['options']['homepage']["tagline"] = '';
+    }
+
+    if (values['tagline2']) {
+        const data = {
+            homepage: {
+                ...values['options']['homepage'],
+                tagline2: values['tagline2']
+            }
+        }
+        values['options'] = { ...values['options'], ...data };
+    } else {
+        values['options']['homepage']["tagline2"] = '';
+    }
+
+    if (values['video']) {
+        const data = {
+            homepage: {
+                ...values['options']['homepage'],
+                video: values['video']
+            }
+        }
+        values['options'] = { ...values['options'], ...data };
+    } else {
+        values['options']['homepage']["video"] = '';
+    }
+
+    if (values['title_req']) {
+        const data = {
+            homepage: {
+                ...values['options']['homepage'],
+                title_req: values['title_req']
+            }
+        }
+        values['options'] = { ...values['options'], ...data };
+    } else {
+        values['options']['homepage']["title_req"] = '';
+    }
+
+    if (values['tagline_req']) {
+        const data = {
+            homepage: {
+                ...values['options']['homepage'],
+                tagline_req: values['tagline_req']
+            }
+        }
+        values['options'] = { ...values['options'], ...data };
+    } else {
+        values['options']['homepage']["tagline_req"] = '';
+    }
+
+    if (values['require_img']) {
+        const data = {
+            homepage: {
+                ...values['options']['homepage'],
+                require_img: values['require_img']
+            }
+        }
+        values['options'] = { ...values['options'], ...data };
+    } else {
+        values['options']['homepage']["require_img"] = '';
+    }
+
+    if (values['require_img2']) {
+        const data = {
+            homepage: {
+                ...values['options']['homepage'],
+                require_img2: values['require_img2']
+            }
+        }
+        values['options'] = { ...values['options'], ...data };
+    } else {
+        values['options']['homepage']["require_img2"] = '';
+    }
+
+    if (values['bottom_banner']) {
+        const data = {
+            homepage: {
+                ...values['options']['homepage'],
+                bottom_banner: values['bottom_banner']
+            }
+        }
+        values['options'] = { ...values['options'], ...data };
+    } else {
+        values['options']['homepage']["bottom_banner"] = '';
+    }
 
     values["_method"] = "put";
     mutate(values);
