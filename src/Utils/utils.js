@@ -125,7 +125,7 @@ export const getRemainingBalance = (amort_month_remaining, amort_amount) => {
   let result = 0;
   const amortRemaining = amort_month_remaining === 0 ? 0 : amort_month_remaining;
   if (amortRemaining > 0) {
-      result = (amortRemaining - 1) * amort_amount;
+      result = (amortRemaining) * amort_amount;
   }
   return result;
 }
@@ -134,7 +134,7 @@ export const getAmountPaid = (amort_month_remaining, month_contract, amort_amoun
   let result = 0;
   const amortRemaining = amort_month_remaining > 0 ? amort_month_remaining : 0;
   if (amortRemaining > 0) {
-      const paidMonth = month_contract - (amortRemaining - 1);
+      const paidMonth = month_contract - (amortRemaining);
       result = paidMonth * amort_amount;
   }
   return result;
