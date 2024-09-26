@@ -108,5 +108,6 @@ export function InitValues(oldData, updateId) {
     downpayment: updateId ? oldData?.downpayment || '' : '',
     fe_section: updateId ? oldData?.fe_section || '' : '',
     is_exist_client: 'sc',
+    is_lock_amortization: updateId ? oldData?.is_lock_amortization || '0' : '0',
   };
 }

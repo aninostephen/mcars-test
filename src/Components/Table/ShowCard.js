@@ -12,7 +12,7 @@ import {
   RiFileCopyFill,
   RiDownloadCloudLine,
 } from "react-icons/ri";
-import { getNextPayableAmortization, getTotalRemainingAmortization, MoneyFormat, ordinalSuffix } from '@/Utils/utils';
+import { getAmountPaid, getNextPayableAmortization, getRemainingBalance, getTotalRemainingAmortization, MoneyFormat, ordinalSuffix } from '@/Utils/utils';
 import DeleteButton from "./DeleteButton";
 import styled from 'styled-components';
 import Loader from '../CommonComponent/Loader';
@@ -111,25 +111,6 @@ Phone #: ${accountData.phone}
             saveAs(content, "images.zip");
         });
     };
-
-    const getRemainingBalance = (amort_month_remaining, amort_amount) => {
-        let result = 0;
-        const amortRemaining = amort_month_remaining === 0 ? 0 : amort_month_remaining;
-        if (amortRemaining > 0) {
-            result = (amortRemaining - 1) * amort_amount;
-        }
-        return result;
-    }
-
-    const getAmountPaid = (amort_month_remaining, month_contract, amort_amount) => {
-        let result = 0;
-        const amortRemaining = amort_month_remaining === 0 ? 0 : amort_month_remaining;
-        if (amortRemaining > 0) {
-            const paidMonth = month_contract - amortRemaining;
-            result = paidMonth * amort_amount;
-        }
-        return result;
-    }
 
     if (fetchStatus === 'fetching') return <Loader />;
     return (

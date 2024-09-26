@@ -116,7 +116,26 @@ export const getTotalRemainingAmortization = (month_contract, month_paid, amort_
   const monthContract = parseInt(month_contract);
   const monthPaid = parseInt(month_paid);
   const montPaid = getTotalMonthPaid(monthContract, monthPaid);
-  let remainingMonth = monthContract - montPaid;
+  let remainingMonth = monthContract;
   remainingMonth = remainingMonth >= 0 ? remainingMonth : 0;
   return parseInt(amort_amount) * parseInt(remainingMonth);
+}
+
+export const getRemainingBalance = (amort_month_remaining, amort_amount) => {
+  let result = 0;
+  const amortRemaining = amort_month_remaining === 0 ? 0 : amort_month_remaining;
+  if (amortRemaining > 0) {
+      result = (amortRemaining - 1) * amort_amount;
+  }
+  return result;
+}
+
+export const getAmountPaid = (amort_month_remaining, month_contract, amort_amount) => {
+  let result = 0;
+  const amortRemaining = amort_month_remaining > 0 ? amort_month_remaining : 0;
+  if (amortRemaining > 0) {
+      const paidMonth = month_contract - (amortRemaining - 1);
+      result = paidMonth * amort_amount;
+  }
+  return result;
 }

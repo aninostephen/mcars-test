@@ -53,101 +53,123 @@ const AmortizationAccount = ({ values, setFieldValue, errors, updateId, touched 
           </Stack>
         </Alert>
       </div>
-      <SearchableSelectInput
-        nameList={[
-          {
-            title: t("DueEveryMonth"),
-            name: "due_date",
-            require: "true",
-            inputprops: {
-              name: "due_date",
-              id: "due_date",
-              options: generateMonthlySchedule().map((item, idx) => ({ id: idx+1, name: item })),
-            },
-          },
-        ]}
-      />
 
-      <CalendarField
-        value={values?.next_due}
-        setFieldValue={setFieldValue}
-        errors={errors}
-        touched={touched}
-        label={t("NextDue")}
-        name="next_due"
-      />
+      {values['is_lock_amortization'] === '1' && (
+        <>
+          <Alert severity="info">
+            Amortization locked!
+          </Alert>
+          <Stack direction="column" spacing={2}>
+            <div><strong>{t("DueEveryMonth")}:</strong> {dayjs(values['due_date']).format(dateFormat)}</div>
+            <div><strong>{t("NextDue")}:</strong> {dayjs(values['next_due']).format(dateFormat)}</div>
+            <div><strong>{t("bankName")}:</strong> {values['bank_name']}</div>
+            <div><strong>{t("MonthContract")}:</strong> {values['month_contract']} months</div>
+            <div><strong>{t("MonthPaid")}:</strong> {values['month_paid']} months</div>
+            <div><strong>{t("AmortAmount")}:</strong> {MoneyFormat(values['amort_amount'])}</div>
+            <div><strong>{t("AccountNo")}:</strong> {values['account_no']}</div>
+          </Stack>
+        </>
+      )}
+      
+      {values['is_lock_amortization'] === '0' && (
+        <>
+          <SearchableSelectInput
+            nameList={[
+              {
+                title: t("DueEveryMonth"),
+                name: "due_date",
+                require: "true",
+                inputprops: {
+                  name: "due_date",
+                  id: "due_date",
+                  options: generateMonthlySchedule().map((item, idx) => ({ id: idx+1, name: item })),
+                },
+              },
+            ]}
+          />
 
-      <SimpleInputField 
-        nameList={
-          [
-            {
-              title: t("bankName"),
-              name: "bank_name",
-              require: "true",
-              placeholder: t("bankName")
-            },
-          ]
-      }/>
+          <CalendarField
+            value={values?.next_due}
+            setFieldValue={setFieldValue}
+            errors={errors}
+            touched={touched}
+            label={t("NextDue")}
+            name="next_due"
+          />
 
-      <SearchableSelectInput
-        nameList={[
-          {
-            title: t("MonthContract"),
-            name: "month_contract",
-            require: "true",
-            inputprops: {
-              name: "month_contract",
-              id: "month_contract",
-              options: [
-                { id: 36, name: "36 Month" },
-                { id: 48, name: "48 Month" },
-                { id: 60, name: "60 Month" },
-                { id: 72, name: "72 Month" },
-              ],
-            },
-          },
-        ]}
-      />
+          <SimpleInputField 
+            nameList={
+              [
+                {
+                  title: t("bankName"),
+                  name: "bank_name",
+                  require: "true",
+                  placeholder: t("bankName")
+                },
+              ]
+          }/>
 
-      <SearchableSelectInput
-        nameList={[
-          {
-            title: t("MonthPaid"),
-            name: "month_paid",
-            require: "true",
-            inputprops: {
-              name: "month_paid",
-              id: "month_paid",
-              options: generateCountData(100, 0).map((month, idx) => ({ id: idx, name: `${month} month`})),
-            },
-          },
-        ]}
-      />
+          <SearchableSelectInput
+            nameList={[
+              {
+                title: t("MonthContract"),
+                name: "month_contract",
+                require: "true",
+                inputprops: {
+                  name: "month_contract",
+                  id: "month_contract",
+                  options: [
+                    { id: 36, name: "36 Month" },
+                    { id: 48, name: "48 Month" },
+                    { id: 60, name: "60 Month" },
+                    { id: 72, name: "72 Month" },
+                  ],
+                },
+              },
+            ]}
+          />
 
-      <SimpleInputField
-        nameList={[
-            {
-              value: MoneyFormat(values?.amort_amount),
-              name: "amort_amount",
-              require: "true",
-              inputaddon: "true",
-              title: t("AmortAmount"),
-              placeholder: t("AmortAmount"),
-            },
-        ]}
-      />
+          <SearchableSelectInput
+            nameList={[
+              {
+                title: t("MonthPaid"),
+                name: "month_paid",
+                require: "true",
+                inputprops: {
+                  name: "month_paid",
+                  id: "month_paid",
+                  options: generateCountData(100, 0).map((month, idx) => ({ id: idx, name: `${month} month`})),
+                },
+              },
+            ]}
+          />
 
-      <SimpleInputField 
-        nameList={
-          [
-            {
-              title: t("AccountNo"),
-              name: "account_no",
-              require: "true",
-              placeholder: t("AccountNo")
-            },
-          ]
-      }/>
+          <SimpleInputField
+            nameList={[
+                {
+                  value: MoneyFormat(values?.amort_amount),
+                  name: "amort_amount",
+                  require: "true",
+                  inputaddon: "true",
+                  title: t("AmortAmount"),
+                  placeholder: t("AmortAmount"),
+                },
+            ]}
+          />
+
+          <SimpleInputField 
+            nameList={
+              [
+                {
+                  title: t("AccountNo"),
+                  name: "account_no",
+                  require: "true",
+                  placeholder: t("AccountNo")
+                },
+              ]
+          }/>
+        </>
+      )}
     </>
   );
 };
