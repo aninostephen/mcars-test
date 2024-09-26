@@ -223,10 +223,10 @@ Phone #: ${accountData.phone}
                                                     <TableBody>
                                                         <TableRow>
                                                             <TableCell>{item?.month_contract} month</TableCell>
-                                                            <TableCell>{item?.month_paid ? `${item?.month_paid > 0 ? item?.month_paid : 0} month` : '--'}</TableCell>
+                                                            <TableCell>{item?.amort_month_remaining ? `${item?.amort_month_remaining > 0 ? item?.amort_month_remaining : 0} month` : '--'}</TableCell>
                                                             {/* <TableCell>{item?.amort_month_remaining ? `${item?.amort_month_remaining > 0 ? item?.amort_month_remaining - 1 : 0} month` : '--'}</TableCell> */}
-                                                            <TableCell>{item?.amort_month_remaining ? `${currencySymbol} ${MoneyFormat(getRemainingBalance(item?.amort_month_remaining, item?.amort_amount))}` : '--'}</TableCell>
                                                             <TableCell>{item?.amort_month_remaining ? `${currencySymbol} ${MoneyFormat(getAmountPaid(item?.amort_month_remaining, item?.month_contract, item?.amort_amount))}` : '--'}</TableCell>
+                                                            <TableCell>{item?.amort_month_remaining ? `${currencySymbol} ${MoneyFormat(getRemainingBalance(item?.amort_month_remaining, item?.amort_amount))}` : '--'}</TableCell>
                                                             <TableCell>{item?.amort_remaining_balance ? `${currencySymbol} ${MoneyFormat(getTotalRemainingAmortization(item?.month_contract, item?.amort_month_paid, item?.amort_amount))}` : '--'}</TableCell>
                                                         </TableRow>
                                                     </TableBody>
