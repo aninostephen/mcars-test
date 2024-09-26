@@ -75,5 +75,7 @@ export const ThemeOptionInitialValue = (NewSettingsData) => {
         require_img: NewSettingsData?.homepage?.require_img ? NewSettingsData?.homepage?.require_img : "",
         require_img2: NewSettingsData?.homepage?.require_img2 ? NewSettingsData?.homepage?.require_img2 : "",
         bottom_banner: NewSettingsData?.homepage?.bottom_banner ? NewSettingsData?.homepage?.bottom_banner : "",
+        require_img3: NewSettingsData?.homepage?.require_img3 ? NewSettingsData?.homepage?.require_img3 : "",
+        require_img4: NewSettingsData?.homepage?.require_img4 ? NewSettingsData?.homepage?.require_img4 : "",
     }
 }

@@ -224,6 +224,30 @@ const ThemeOptionSubmit = (values, mutate) => {
         values['options']['homepage']["bottom_banner"] = '';
     }
 
+    if (values['require_img3']) {
+        const data = {
+            homepage: {
+                ...values['options']['homepage'],
+                require_img3: values['require_img3']
+            }
+        }
+        values['options'] = { ...values['options'], ...data };
+    } else {
+        values['options']['homepage']["require_img3"] = '';
+    }
+
+    if (values['require_img4']) {
+        const data = {
+            homepage: {
+                ...values['options']['homepage'],
+                require_img4: values['require_img4']
+            }
+        }
+        values['options'] = { ...values['options'], ...data };
+    } else {
+        values['options']['homepage']["require_img4"] = '';
+    }
+
     values["_method"] = "put";
     mutate(values);
 }

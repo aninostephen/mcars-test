@@ -70,6 +70,29 @@ const Homepage = ({ values, setFieldValue, errors }) => {
                         values={values}
                         setFieldValue={setFieldValue}
                         helpertext={getHelperText('1920x900')} />
+
+                    <h2>Single Unit Sidebar</h2>
+                    <Divider sx={{marginTop: 2, marginBottom: 2}}/>
+                    <FileUploadField
+                        name="require_img3"
+                        title={"Image 3"}
+                        errors={errors}
+                        id="require_img3"
+                        type="file"
+                        values={values}
+                        setFieldValue={setFieldValue}
+                        helpertext={getHelperText('611x459')}
+                    />
+                    <FileUploadField
+                        name="require_img4"
+                        title={"Image 4"}
+                        errors={errors}
+                        id="require_img4"
+                        type="file"
+                        values={values}
+                        setFieldValue={setFieldValue}
+                        helpertext={getHelperText('611x459')}
+                    />
                 </Col>
             </Row>
         </>

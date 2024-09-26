@@ -19,6 +19,7 @@ import Loader from '../CommonComponent/Loader';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 import AccountContext from '@/Helper/AccountContext';
+import SettingContext from '@/Helper/SettingContext';
 
 const GridStyled = styled(Grid)`
     position: relative;
@@ -42,6 +43,7 @@ const GridStyled = styled(Grid)`
 
 const ShowCard = ({ headerData, moduleName, mutate, fetchStatus }) => {
     const { accountData } = useContext(AccountContext)
+    const { currencySymbol } = useContext(SettingContext);
     const { data } = headerData;
     const router = useRouter();
     const [clipCopiedOpen, setClipCopiedOpen] = useState(false);
@@ -109,6 +111,25 @@ Phone #: ${accountData.phone}
             saveAs(content, "images.zip");
         });
     };
+
+    const getRemainingBalance = (amort_month_remaining, amort_amount) => {
+        let result = 0;
+        const amortRemaining = amort_month_remaining === 0 ? 0 : amort_month_remaining;
+        if (amortRemaining > 0) {
+            result = (amortRemaining - 1) * amort_amount;
+        }
+        return result;
+    }
+
+    const getAmountPaid = (amort_month_remaining, month_contract, amort_amount) => {
+        let result = 0;
+        const amortRemaining = amort_month_remaining === 0 ? 0 : amort_month_remaining;
+        if (amortRemaining > 0) {
+            const paidMonth = month_contract - amortRemaining;
+            result = paidMonth * amort_amount;
+        }
+        return result;
+    }
 
     if (fetchStatus === 'fetching') return <Loader />;
     return (
@@ -205,26 +226,26 @@ Phone #: ${accountData.phone}
                                             </Typography>
                                             <div><b>Due date</b>: Every {ordinalSuffix(item?.due_date)} Month</div>
                                             <div style={{color: item?.is_amort_due_date === '1'? 'red': ''}}><b>Next Payable</b>: {getNextPayableAmortization(item?.ledger)}</div>
-                                            <div><b>Downpayment</b>: {MoneyFormat(item?.downpayment)}</div>
-                                            <div><b>Montly Amortization</b>: {MoneyFormat(item?.amort_amount)}</div>
+                                            <div><b>Downpayment</b>: {currencySymbol} {MoneyFormat(item?.downpayment)}</div>
+                                            <div><b>Montly Amortization</b>: {currencySymbol} {MoneyFormat(item?.amort_amount)}</div>
                                             <Stack direction="row" spacing={1.5}>
                                                 <Table>
                                                     <TableHead>
                                                         <TableRow>
                                                             <TableCell>Terms</TableCell>
-                                                            <TableCell>Paid</TableCell>
-                                                            <TableCell>Payables</TableCell>
                                                             <TableCell>Remaining</TableCell>
+                                                            <TableCell>Amount Paid</TableCell>
                                                             <TableCell>Balance</TableCell>
+                                                            <TableCell>Total Price Unit</TableCell>
                                                         </TableRow>
                                                     </TableHead>
                                                     <TableBody>
                                                         <TableRow>
                                                             <TableCell>{item?.month_contract} month</TableCell>
-                                                            <TableCell>{item?.amort_month_paid ? item?.amort_month_paid : 0} month</TableCell>
-                                                            <TableCell>{item?.amort_month_remaining ? item?.amort_month_remaining - 1 : '--'}</TableCell>
-                                                            <TableCell>{item?.month_paid ? item?.month_paid : '--'}</TableCell>
-                                                            <TableCell>{item?.amort_remaining_balance ? MoneyFormat(getTotalRemainingAmortization(item?.month_contract, item?.amort_month_paid, item?.amort_amount)) : '--'}</TableCell>
+                                                            <TableCell>{item?.amort_month_remaining ? `${item?.amort_month_remaining > 0 ? item?.amort_month_remaining - 1 : 0} month` : '--'}</TableCell>
+                                                            <TableCell>{item?.amort_month_remaining ? `${currencySymbol} ${MoneyFormat(getAmountPaid(item?.amort_month_remaining, item?.month_contract, item?.amort_amount))}` : '--'}</TableCell>
+                                                            <TableCell>{item?.amort_month_remaining ? `${currencySymbol} ${MoneyFormat(getRemainingBalance(item?.amort_month_remaining, item?.amort_amount))}` : '--'}</TableCell>
+                                                            <TableCell>{item?.amort_remaining_balance ? `${currencySymbol} ${MoneyFormat(getTotalRemainingAmortization(item?.month_contract, item?.amort_month_paid, item?.amort_amount))}` : '--'}</TableCell>
                                                         </TableRow>
                                                     </TableBody>
                                                 </Table>
