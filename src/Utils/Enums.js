@@ -39,9 +39,9 @@ export const TRANSACTION = {
 };
 
 export const STOCK_STATUS = {
-  'ON-HAND': 'On-hand',
+  'ON-HAND': 'Available',
   PENDING: 'Pending',
-  RELEASED: 'Release',
+  RELEASED: 'Sold',
   FOR_APPROVAL: 'For Approval',
   FOR_RETURN: 'For Return',
   RETURN: 'Return Unit',
