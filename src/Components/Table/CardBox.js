@@ -96,9 +96,9 @@ const CardBox = ({ item, handleOnClick, copyToClipboard, downloadImageAsZip, cur
                        <Stack spacing={1} direction='column'>
                             <Stack direction="row" spacing={1} justifyContent="space-between">
                                 <Typography component="div" variant="h6">
-                                    {item?.plate_no} - {item?.car_name}
+                                    {item?.car_name}
                                 </Typography>
-                                 <Stack direction='row' spacing={1}>
+                                <Stack direction='row' spacing={1}>
                                     {item?.have_reserve === '1' && (item?.stock_status === STOCK_STATUS_ENUM['ON-HAND'] || item?.stock_status === STOCK_STATUS_ENUM.PENDING) && (
                                         <Chip label="Reserved" color="primary" style={{background: 'rgb(16 98 16)'}} />
                                     )}

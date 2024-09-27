@@ -14,10 +14,10 @@ const GeneralTab = ({ values, setFieldValue, bodyType, carMake }) => {
   const { t } = useTranslation(i18Lang, 'common');
 
   useEffect(() => {
-    if (values['car_make_id'] || values['body_type_id'] || values['model_variant'] || values['year']) {
+    if (values['car_make_id'] || values['body_type_id'] || values['model_variant'] || values['year'] || values['plate_no']) {
       const cmObj = GetValue(carMake, values['car_make_id']);
       const btObj = GetValue(bodyType, values['body_type_id']);
-      const unitName = `${cmObj?.name ? cmObj.name + ' |' : ''} ${values['model_variant']} - ${values['year']} ${btObj?.name ? `(${btObj.name})` : ''}`;
+      const unitName = `${values['plate_no']} - ${cmObj?.name ? cmObj.name + ' |' : ''} ${values['model_variant']} - ${values['year']} ${btObj?.name ? `(${btObj.name})` : ''}`;
       setFieldValue('car_name', unitName);
     }
   }, [
@@ -25,6 +25,7 @@ const GeneralTab = ({ values, setFieldValue, bodyType, carMake }) => {
     values?.model_variant,
     values?.body_type_id,
     values?.year,
+    values?.plate_no,
   ]);
 
   return (
