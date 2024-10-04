@@ -57,6 +57,18 @@ const GeneralTab = ({ values, setFieldValue, bodyType, carMake }) => {
         }
       />
 
+      <SimpleInputField 
+        nameList={
+          [
+            { 
+              title: t("EndPlateNo"),
+              name: "end_plate_code",
+              placeholder: t("EndPlateNo"),
+            },
+          ]
+        }
+      />
+
       <SearchableSelectInput
         nameList={[
           {

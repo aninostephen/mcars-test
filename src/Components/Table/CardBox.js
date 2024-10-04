@@ -144,6 +144,15 @@ const CardBox = ({ item, handleOnClick, copyToClipboard, downloadImageAsZip, cur
                                             <div><RiMapPin5Fill /> {item?.old_owner_id ? item?.old_owner?.client_information?.address : '--'}</div>
                                         </>
                                     )}
+
+                                    {item?.remarks && (
+                                        <>
+                                            <Typography variant="subtitle1" color="text.primary" component="div" sx={{ fontWeight: 700 }}>
+                                                Remarks:
+                                            </Typography>
+                                            <div dangerouslySetInnerHTML={{ __html: item?.remarks }} />
+                                        </>
+                                    )}
                                 </Stack>
                                 <Stack direction='column' spacing={1}>
                                     <Typography variant="subtitle1" color="text.primary" component="div" sx={{ fontWeight: 700 }}>

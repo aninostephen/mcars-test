@@ -109,5 +109,6 @@ export function InitValues(oldData, updateId) {
     fe_section: updateId ? oldData?.fe_section || '' : '',
     is_exist_client: 'sc',
     is_lock_amortization: updateId ? oldData?.is_lock_amortization || '0' : '0',
+    end_plate_code: updateId ? oldData?.end_plate_code || '' : '',
   };
 }

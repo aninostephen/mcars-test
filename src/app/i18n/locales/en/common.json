@@ -1009,5 +1009,6 @@
   "NextDue": "Next Due Date",
   "DueEveryMonth": "Due Every Month",
   "ClientExist": "Client Exist?",
-  "FESections": "FE Section"
+  "FESections": "FE Section",
+  "EndPlateNo": "End Plate No."
 }
