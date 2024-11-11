@@ -4,6 +4,7 @@ const nextConfig = {
   swcMinify: true,
   env: {
     // For Local Server
+	FE_BASE_URL: "https://www.mcars.ph/",
 	API_PROD_URL: "https://api.mcars.ph/api/",
     //API_PROD_URL: "http://localhost:8000/api/",
   },

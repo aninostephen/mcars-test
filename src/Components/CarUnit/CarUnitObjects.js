@@ -15,11 +15,6 @@ export const ValidationSchema = {
   on_handling_payment: nameSchema,
   insurance_name: nameSchema,
   is_registered: nameSchema,
-  bank_name: nameSchema,
-  month_contract: nameSchema,
-  account_no: nameSchema,
-  amort_amount: nameSchema,
-  due_date: nameSchema,
   current_mileage: nameSchema,
   fuel_type: nameSchema,
   body_color: nameSchema,
@@ -48,6 +43,42 @@ export const ValidationSchema = {
   old_owner_id: Yup.string()
     .when("is_exist_client", {
         is: (val) => val === 'sc',
+        then: Yup.string().required('Field is required'),
+        otherwise: Yup.string(),
+    }),
+  due_date: Yup.string()
+    .when("transactions", {
+        is: (val) => val === 'ASSUME_UNIT',
+        then: Yup.string().required('Field is required'),
+        otherwise: Yup.string(),
+    }),
+  bank_name: Yup.string()
+    .when("transactions", {
+        is: (val) => val === 'ASSUME_UNIT',
+        then: Yup.string().required('Field is required'),
+        otherwise: Yup.string(),
+    }),
+  month_contract: Yup.string()
+    .when("transactions", {
+        is: (val) => val === 'ASSUME_UNIT',
+        then: Yup.string().required('Field is required'),
+        otherwise: Yup.string(),
+    }),
+  month_paid: Yup.string()
+    .when("transactions", {
+        is: (val) => val === 'ASSUME_UNIT',
+        then: Yup.string().required('Field is required'),
+        otherwise: Yup.string(),
+    }),
+  amort_amount: Yup.string()
+    .when("transactions", {
+        is: (val) => val === 'ASSUME_UNIT',
+        then: Yup.string().required('Field is required'),
+        otherwise: Yup.string(),
+    }),
+  account_no: Yup.string()
+    .when("transactions", {
+        is: (val) => val === 'ASSUME_UNIT',
         then: Yup.string().required('Field is required'),
         otherwise: Yup.string(),
     }),
@@ -112,3 +143,16 @@ export function InitValues(oldData, updateId) {
     end_plate_code: updateId ? oldData?.end_plate_code || '' : '',
   };
 }
+
+export const checkTitleTab = (items, transactions) => {
+  
+  if (transactions !== 'CASH_UNIT') {
+    return items;
+  }
+
+  if (!Array.isArray(items)) {
+    throw new Error('Expected an array of items');
+  }
+
+  return items.filter(item => item.title !== 'Finance Amortization');
+};

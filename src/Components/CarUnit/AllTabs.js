@@ -29,13 +29,15 @@ const AllTabs = ({ values, setFieldValue, errors, updateId, activeTab, touched, 
                 <TabPane tabId="3">
                     <OwnerTab values={values} setFieldValue={setFieldValue} errors={errors} updateId={updateId} touched={touched} users={users} />
                 </TabPane>
-                <TabPane tabId="4">
-                    <Amortization values={values} setFieldValue={setFieldValue} errors={errors} updateId={updateId} touched={touched} />
-                </TabPane>
-                <TabPane tabId="5">
+                {values['transactions'] === 'ASSUME_UNIT' && (
+                    <TabPane tabId="4">
+                        <Amortization values={values} setFieldValue={setFieldValue} errors={errors} updateId={updateId} touched={touched} />
+                    </TabPane>
+                )}
+                <TabPane tabId={values['transactions'] !== 'ASSUME_UNIT' ? "4" : "5"}>
                     <ImagesTab values={values} setFieldValue={setFieldValue} errors={errors} updateId={updateId} />
                 </TabPane>
-                <TabPane tabId="6">
+                <TabPane tabId={values['transactions'] !== 'ASSUME_UNIT' ? "5" : "6"}>
                     <StatusInformation values={values} setFieldValue={setFieldValue} errors={errors} updateId={updateId} />
                 </TabPane>
             </TabContent>

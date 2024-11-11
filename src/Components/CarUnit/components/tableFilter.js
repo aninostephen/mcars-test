@@ -121,6 +121,27 @@ const TableFilter = ({ filter, onHandleFilter }) => {
                     </option>
                 ))}
             </Input>
+            <Input
+                name="other_filter"
+                type="select"
+                onChange={(e) => onChangeFilter(e)}
+                style={{
+                width: '200px'
+                }}
+            >
+                <option value="">
+                    Other filter
+                </option>
+                <option value="nodp">
+                    No downpayment
+                </option>
+                <option value="nomileage">
+                    No Mileage  
+                </option>
+                <option value="noimage">
+                    No Image  
+                </option>
+            </Input>
         </Stack>
     );
 };

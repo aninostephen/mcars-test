@@ -102,6 +102,14 @@ Phone #: ${accountData.phone}
         });
     };
 
+    const handleOpenUrl = (slug) => {
+        if (slug) {
+            const baseUrl = process.env.FE_BASE_URL;
+            const url = `${baseUrl}product/${slug}`;
+            window.open(url, '_blank');
+        }
+    }
+
     if (fetchStatus === 'fetching') return <Loader />;
     return (
         <Grid container>
@@ -113,6 +121,7 @@ Phone #: ${accountData.phone}
                     item={item}
                     currencySymbol={currencySymbol}
                     mutate={mutate}
+                    handleOpenUrl={handleOpenUrl}
                 />
             )) : 'No data'}
             <Snackbar

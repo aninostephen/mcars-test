@@ -226,6 +226,7 @@ const GeneralTab = ({ values, setFieldValue, bodyType, carMake }) => {
                 { id: "GAS", name: "Gas" },
                 { id: "DIESEL", name: "Diesel" },
                 { id: "ELECTRIC", name: "Electric" },
+                { id: "HYBRID", name: "Hybrid" },
               ],
             },
           },

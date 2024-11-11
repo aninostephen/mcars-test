@@ -7,7 +7,7 @@ import { CarUnitTabTitleListData } from "../../Data/TabTitleListData";
 import request from "../../Utils/AxiosUtils";
 import { cu, bt, cm, user } from "../../Utils/AxiosUtils/API";
 import Loader from "../CommonComponent/Loader";
-import { InitValues, ValidationSchema } from "./CarUnitObjects";
+import { checkTitleTab, InitValues, ValidationSchema } from "./CarUnitObjects";
 import SubmitFunction from "./CarUnitSubmitFunction";
 import AllTabs from "./AllTabs";
 import I18NextContext from "@/Helper/I18NextContext";
@@ -99,7 +99,7 @@ const CarUnitForm = ({ mutate, loading, updateId, title }) => {
                 </div>
                 <Row>
                   <Col xl="3" lg="4">
-                    <TabTitle activeTab={activeTab} setActiveTab={setActiveTab} titleList={CarUnitTabTitleListData} errors={errors} touched={touched} />
+                    <TabTitle activeTab={activeTab} setActiveTab={setActiveTab} titleList={checkTitleTab(CarUnitTabTitleListData, values['transactions'])} errors={errors} touched={touched} />
                   </Col>
                   <AllTabs
                     values={values}

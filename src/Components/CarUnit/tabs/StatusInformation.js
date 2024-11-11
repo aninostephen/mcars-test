@@ -30,20 +30,22 @@ const StatusInformation = ({ values, setFieldValue, errors, updateId }) => {
         ]}
       />
 
-      <SimpleInputField
-        nameList={
-          [
-            {
-              value: MoneyFormat(values?.downpayment),
-              title: t("Downpayment"),
-              name: "downpayment",
-              require: "false",
-              inputaddon: "true",
-              placeholder: t("Downpayment")
-            },
-          ]
-      } />
-
+      {values['transactions'] === 'ASSUME_UNIT' && (
+        <SimpleInputField
+          nameList={
+            [
+              {
+                value: MoneyFormat(values?.downpayment),
+                title: t("Downpayment"),
+                name: "downpayment",
+                require: "false",
+                inputaddon: "true",
+                placeholder: t("Downpayment")
+              },
+            ]
+        } />
+      )}
+      
       <DescriptionInput
         values={values}
         setFieldValue={setFieldValue}

@@ -21,7 +21,7 @@ export const generateMonthlySchedule = () => {
 };
 
 export const generateYears = (startYear = 1999) => {
-  const currentYear = new Date().getFullYear();
+  const currentYear = new Date().getFullYear() + 1;
   const years = [];
   for (let year = currentYear; year >= startYear; year--) {
       years.push({ id: year.toString(), name: year.toString() });

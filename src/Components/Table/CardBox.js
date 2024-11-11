@@ -9,6 +9,7 @@ import {
   RiMapPin5Fill,
   RiFileCopyFill,
   RiDownloadCloudLine,
+  RiArrowRightCircleFill,
 } from "react-icons/ri";
 import { getAmountPaid, getNextPayableAmortization, getRemainingBalance, getTotalRemainingAmortization, MoneyFormat, ordinalSuffix } from '@/Utils/utils';
 import DeleteButton from "./DeleteButton";
@@ -34,7 +35,7 @@ const GridStyled = styled(Grid)`
     }
 `;
 
-const CardBox = ({ item, handleOnClick, copyToClipboard, downloadImageAsZip, currencySymbol, mutate }) => {
+const CardBox = ({ item, handleOnClick, copyToClipboard, downloadImageAsZip, currencySymbol, mutate, handleOpenUrl }) => {
 
     let boxColor = '#eeffee';
     let tagColor = '#1976d2';
@@ -64,6 +65,7 @@ const CardBox = ({ item, handleOnClick, copyToClipboard, downloadImageAsZip, cur
                     <DeleteButton mutate={mutate} id={item.id}/>
                     <RiFileCopyFill title="Copy details" style={{cursor: 'pointer'}} onClick={() => copyToClipboard(item)} />
                     <RiDownloadCloudLine title="Download images" style={{cursor: 'pointer'}} onClick={() => downloadImageAsZip(item?.car_unit_galleries)} />
+                    <RiArrowRightCircleFill title="View Frontend" style={{cursor: 'pointer'}} onClick={() => handleOpenUrl(item?.slug)} />
                 </Stack>
             </div>
             <Card className='item_container' sx={{
@@ -123,6 +125,9 @@ const CardBox = ({ item, handleOnClick, copyToClipboard, downloadImageAsZip, cur
                                     <div><b>Transmission.</b>: {TRANSMISSION[item?.transmission]}</div>
                                     <div><b>Current mileage.</b>: {item?.current_mileage ? MoneyFormat(item?.current_mileage) : '--'}</div>
                                     <div><b>Fuel Type.</b>: {item?.fuel_type ? item?.fuel_type : '--'}</div>
+                                    {item?.stock_status === STOCK_STATUS_ENUM.RELEASED && (
+                                        <div><b>Admin: </b>: {item?.created_by?.name ? item?.created_by?.name : '--'}</div>
+                                    )}
                                 </Stack>
                                 <Stack direction='column' spacing={1} sx={{ width: '250px' }}>
                                     {item?.new_owner_id ? (
@@ -154,38 +159,40 @@ const CardBox = ({ item, handleOnClick, copyToClipboard, downloadImageAsZip, cur
                                         </>
                                     )}
                                 </Stack>
-                                <Stack direction='column' spacing={1}>
-                                    <Typography variant="subtitle1" color="text.primary" component="div" sx={{ fontWeight: 700 }}>
-                                        Amortization
-                                    </Typography>
-                                    <div><b>Due date</b>: Every {ordinalSuffix(item?.due_date)} Month</div>
-                                    <div style={{color: item?.is_amort_due_date === '1'? 'red': ''}}><b>Next Payable</b>: {getNextPayableAmortization(item?.ledger)}</div>
-                                    <div><b>Downpayment</b>: {currencySymbol} {MoneyFormat(item?.downpayment)}</div>
-                                    <div><b>Montly Amortization</b>: {currencySymbol} {MoneyFormat(item?.amort_amount)}</div>
-                                    <Stack direction="row" spacing={1.5}>
-                                        <Table>
-                                            <TableHead>
-                                                <TableRow>
-                                                    <TableCell>Terms</TableCell>
-                                                    <TableCell>Remaining</TableCell>
-                                                    <TableCell>Amount Paid</TableCell>
-                                                    <TableCell>Balance</TableCell>
-                                                    <TableCell>Total Price Unit</TableCell>
-                                                </TableRow>
-                                            </TableHead>
-                                            <TableBody>
-                                                <TableRow>
-                                                    <TableCell>{item?.month_contract} month</TableCell>
-                                                    <TableCell>{item?.amort_month_remaining ? `${item?.amort_month_remaining > 0 ? item?.amort_month_remaining : 0} month` : '--'}</TableCell>
-                                                    {/* <TableCell>{item?.amort_month_remaining ? `${item?.amort_month_remaining > 0 ? item?.amort_month_remaining - 1 : 0} month` : '--'}</TableCell> */}
-                                                    <TableCell>{item?.amort_month_remaining ? `${currencySymbol} ${MoneyFormat(getAmountPaid(item?.amort_month_remaining, item?.month_contract, item?.amort_amount))}` : '--'}</TableCell>
-                                                    <TableCell>{item?.amort_month_remaining ? `${currencySymbol} ${MoneyFormat(getRemainingBalance(item?.amort_month_remaining, item?.amort_amount))}` : '--'}</TableCell>
-                                                    <TableCell>{item?.amort_remaining_balance ? `${currencySymbol} ${MoneyFormat(getTotalRemainingAmortization(item?.month_contract, item?.amort_month_paid, item?.amort_amount))}` : '--'}</TableCell>
-                                                </TableRow>
-                                            </TableBody>
-                                        </Table>
+                                {item?.transactions === 'ASSUME_UNIT' && (
+                                    <Stack direction='column' spacing={1}>
+                                        <Typography variant="subtitle1" color="text.primary" component="div" sx={{ fontWeight: 700 }}>
+                                            Amortization
+                                        </Typography>
+                                        <div><b>Due date</b>: Every {ordinalSuffix(item?.due_date)} Month</div>
+                                        <div style={{color: item?.is_amort_due_date === '1'? 'red': ''}}><b>Next Payable</b>: {getNextPayableAmortization(item?.ledger)}</div>
+                                        <div><b>Downpayment</b>: {currencySymbol} {MoneyFormat(item?.downpayment)}</div>
+                                        <div><b>Montly Amortization</b>: {currencySymbol} {MoneyFormat(item?.amort_amount)}</div>
+                                        <Stack direction="row" spacing={1.5}>
+                                            <Table>
+                                                <TableHead>
+                                                    <TableRow>
+                                                        <TableCell>Terms</TableCell>
+                                                        <TableCell>Remaining</TableCell>
+                                                        <TableCell>Amount Paid</TableCell>
+                                                        <TableCell>Balance</TableCell>
+                                                        <TableCell>Total Price Unit</TableCell>
+                                                    </TableRow>
+                                                </TableHead>
+                                                <TableBody>
+                                                    <TableRow>
+                                                        <TableCell>{item?.month_contract} month</TableCell>
+                                                        <TableCell>{item?.amort_month_remaining ? `${item?.amort_month_remaining > 0 ? item?.amort_month_remaining : 0} month` : '--'}</TableCell>
+                                                        {/* <TableCell>{item?.amort_month_remaining ? `${item?.amort_month_remaining > 0 ? item?.amort_month_remaining - 1 : 0} month` : '--'}</TableCell> */}
+                                                        <TableCell>{item?.amort_month_remaining ? `${currencySymbol} ${MoneyFormat(getAmountPaid(item?.amort_month_remaining, item?.month_contract, item?.amort_amount))}` : '--'}</TableCell>
+                                                        <TableCell>{item?.amort_month_remaining ? `${currencySymbol} ${MoneyFormat(getRemainingBalance(item?.amort_month_remaining, item?.amort_amount))}` : '--'}</TableCell>
+                                                        <TableCell>{item?.amort_remaining_balance ? `${currencySymbol} ${MoneyFormat(getTotalRemainingAmortization(item?.month_contract, item?.amort_month_paid, item?.amort_amount))}` : '--'}</TableCell>
+                                                    </TableRow>
+                                                </TableBody>
+                                            </Table>
+                                        </Stack>
                                     </Stack>
-                                </Stack>
+                                )}
                             </Stack>
                        </Stack>
                     </CardContent>
